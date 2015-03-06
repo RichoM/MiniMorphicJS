@@ -125,6 +125,7 @@ var World = (function () {
                 that.fullStep(now);
                 if (that.invalidRect()) {
                     that.draw();
+					that.invalidRect(undefined);
                 }
                 window.requestAnimationFrame(step);
             }
