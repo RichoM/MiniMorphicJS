@@ -29,7 +29,9 @@
 			{ key: "4", src: "images/gb5.png" },
 			{ key: "5", src: "images/gb6.png" }
 		], function () {
-			document.getElementById("loading").remove();
+			// Remove loading
+			document.body.removeChild(loading);
+			
 			var world = new World();
 			var buttons = [];
 			
