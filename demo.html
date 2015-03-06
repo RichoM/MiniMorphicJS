@@ -85,7 +85,7 @@
 			fountainButton.top(bounceButton.bottom() + 10);
 			fountainButton.on("mouseUp", function () {
 				if (fountain === undefined) {
-					fountain = new OptimizedFountain();
+					fountain = new Fountain();
 					world.addMorph(fountain);			
 					fountainButton.label("Stop fountain");
 				} else {
