@@ -33,6 +33,8 @@ var World = (function () {
                 clearTimeout(id);
             };
     }());
+	
+	var instances = [];
     
     World.inherits(Morph);
     function World(htmlCanvas) {
@@ -79,6 +81,8 @@ var World = (function () {
         };
         this.initializeEventHandling();
         this.initializeStepping();
+		
+		instances.push(this);
     }
     
     World.methods({
@@ -133,6 +137,14 @@ var World = (function () {
         }
     });
     
+	World.classMethods({
+		instances: function () {
+			return instances;
+		},
+		current: function () {
+			return instances[instances.length - 1];
+		}
+	});
     
     return World;
 })();
