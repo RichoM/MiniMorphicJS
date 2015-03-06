@@ -9,15 +9,20 @@
 		
 		<script src="js/libraries/oop.js"></script>
 		
-		<script src="js/KeyCode.js"></script>
-		<script src="js/Canvas.js"></script>
-		<script src="js/Form.js"></script>
-		<script src="js/EventHandler.js"></script>
-		<script src="js/Morph.js"></script>
-		<script src="js/World.js"></script>
-		<script src="js/Sprite.js"></script>
-		<script src="js/Ellipse.js"></script>
-		<script src="js/Button.js"></script>
+		<script src="js/core/KeyCode.js"></script>
+		<script src="js/core/Canvas.js"></script>
+		<script src="js/core/Form.js"></script>
+		<script src="js/core/EventHandler.js"></script>
+		<script src="js/core/Morph.js"></script>
+		<script src="js/core/World.js"></script>
+		<script src="js/core/Sprite.js"></script>
+		<script src="js/core/Ellipse.js"></script>
+		<script src="js/core/Button.js"></script>
+		
+		<script src="js/demo/BouncingBall.js"></script>
+		<script src="js/demo/Fountain.js"></script>
+		<script src="js/demo/GuybrushThreepwood.js"></script>
+		<script src="js/demo/OptimizedFountain.js"></script>
 		
 		<script>
 		// First we load all the images we're going to use
@@ -65,41 +70,7 @@
 			bounceButton.top(clearButton.bottom() + 10);
 			bounceButton.on("mouseUp", function () {
 				for (var i = 0; i < 15; i++) {
-					(function () {
-						var speed = Math.random() * -2.5;
-						var m = new Ellipse();
-						var extent = Math.random() * 150;
-						m.color("red");
-						m.extent({ w: extent, h: extent	});
-						m.alpha(Math.random());
-						m.center({
-							x: Math.random() * world.width(),
-							y: Math.random() * (world.height() * 0.5)
-						});
-						
-						m.on("step", function () {
-							// Fall
-							var c = m.center();		
-							m.center({ 
-								x: c.x,
-								y: c.y + speed
-							});
-							
-							speed += 0.1; // Accelerate
-							
-							// Bounce
-							if (speed > 0 // Only falling morphs
-									&& m.bottom() >= world.bottom()) {
-								m.bottom(world.bottom());
-								speed *= -0.75;
-								if (Math.abs(speed) <= 1) {
-									speed = 0;
-								}
-							}
-						});
-						
-						world.addMorph(m);
-					})();
+					world.addMorph(new BouncingBall());
 				}
 			});
 			
@@ -107,53 +78,21 @@
 			Simple "fountain" demo
 			*/
 			var fountainButton = new Button();
+			var fountain = undefined;
 			buttons.push(fountainButton);
-			var started = false;
 			fountainButton.label("Start fountain");
 			fountainButton.left(bounceButton.left());
 			fountainButton.top(bounceButton.bottom() + 10);
-			fountainButton.on("mouseUp", function () {				
-				started = !started;
-				fountainButton.label(started ? "Stop fountain" : "Start fountain");
-				fountainButton.on("step", !started ? null: function (now) {
-					/*
-					This stepping shouldn't really be here, 
-					but it's just a demo so get off my back...
-					*/
-					var wextent = world.extent();
-					for (var i = 0; i < 5; i++) {
-						(function (startTime) {
-							var m = new Morph();
-							m.extent({ w: 5, h: 5 });
-							m.center(world.center());
-							
-							var speed = {
-								x: Math.random() * (wextent.w / 200) - (wextent.w / 400),
-								y: Math.random() * -1 - (wextent.h / 150)
-							};
-							
-							var maxTime = 4000; // Max lifetime of each particle in ms
-							m.on("step", function (now) {
-								var c = m.center();		
-								m.center({ 
-									x: c.x + speed.x,
-									y: c.y + speed.y
-								});
-								
-								speed.y += 0.1; // Accelerate
-								
-								var progress = now - startTime;
-								m.alpha(1 - (progress / maxTime));
-								
-								if (progress > maxTime) {
-									m.remove();
-								}
-							});
-							
-							world.addMorph(m);
-						})(now);
-					}
-				});
+			fountainButton.on("mouseUp", function () {
+				if (fountain === undefined) {
+					fountain = new OptimizedFountain();
+					world.addMorph(fountain);			
+					fountainButton.label("Stop fountain");
+				} else {
+					fountain.stop();
+					fountain = undefined;
+					fountainButton.label("Start fountain");
+				}
 			});
 			
 			/*
@@ -165,29 +104,7 @@
 			threepwoodButton.left(fountainButton.left());
 			threepwoodButton.top(fountainButton.bottom() + 10);
 			threepwoodButton.on("mouseUp", function () {
-				var key = 0;
-				var gb = new Sprite(Form.get(key.toString()));
-				gb.top(Math.random() * (world.height() - gb.height()));
-				gb.right(0);
-				
-				var last = 0;
-				// Animate
-				gb.on("step", function (now) {
-					// Only step every 150 ms
-					if (now - last < 150) return;
-					last = now;					
-					
-					// Next form
-					key = (key + 1) % 6;
-					gb.form(Form.get(key.toString()));
-					
-					// Move to the right
-					gb.left(gb.left() + 25);
-					if (gb.left() > world.right()) {
-						gb.remove();
-					}					
-				});
-				world.addMorph(gb);
+				world.addMorph(new GuybrushThreepwood());
 			});
 			
 			
