@@ -113,13 +113,11 @@
 			fountainButton.on("mouseUp", function () {				
 				started = !started;
 				fountainButton.label(started ? "Stop fountain" : "Start fountain");
-			});
-			fountainButton.on("step", function (now) {
-				/*
-				This stepping shouldn't really be here, 
-				but it's just a demo so get off my back...
-				*/
-				if (started) {
+				fountainButton.on("step", !started ? null: function (now) {
+					/*
+					This stepping shouldn't really be here, 
+					but it's just a demo so get off my back...
+					*/
 					var wextent = world.extent();
 					for (var i = 0; i < 5; i++) {
 						(function (startTime) {
@@ -153,7 +151,7 @@
 							world.addMorph(m);
 						})(now);
 					}
-				}
+				});
 			});
 			
 			/*
