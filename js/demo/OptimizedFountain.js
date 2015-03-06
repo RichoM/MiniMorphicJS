@@ -1,14 +1,14 @@
 
 var OptimizedFountain = (function () {
 
-	var MAX_PARTICLES = 4000; // How many particles we support
+	var MAX_PARTICLES = 10000; // How many particles we support
     
     OptimizedFountain.inherits(Morph);
     function OptimizedFountain() {
         Morph.call(this);
 
 		this.index = 0;
-		this.particles = new Array(MAX_PARTICLES * 4);
+		this.particles = new Float32Array(MAX_PARTICLES * 4);
 		this.started = false;
 		
 		/*
@@ -25,18 +25,18 @@ var OptimizedFountain = (function () {
 			var particles = this.particles;
 			for (var i = 0; i < particles.length; i += 4) {
 				var x = particles[i];
-				if (x === undefined) continue;
+				if (x === 0) continue;
 				var y = particles[i + 1];
 				if (y > bottom) continue;
 				
-				canvas.withAlpha(1, function () {
+				//canvas.withAlpha(1, function () {
 					canvas.fillRectangle({
 						x: x,
 						y: y,
 						w: 5,
 						h: 5
 					}, "blue");
-				});
+				//});
 			}
 		},
 		start: function () {
@@ -50,7 +50,7 @@ var OptimizedFountain = (function () {
 				var particles = this.particles;
 				for (var i = 0; i < particles.length; i += 4) {
 					var x = particles[i];
-					if (x === undefined) continue;
+					if (x === 0) continue;
 					
 					var y = particles[i + 1];
 					var dx = particles[i + 2];
