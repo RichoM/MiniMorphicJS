@@ -96,13 +96,34 @@
 			});
 			
 			/*
+			Optimized "fountain" demo
+			*/
+			var optimizedFountainButton = new Button();
+			var optimizedfountain = undefined;
+			buttons.push(optimizedFountainButton);
+			optimizedFountainButton.label("Start optimized fountain");
+			optimizedFountainButton.left(fountainButton.left());
+			optimizedFountainButton.top(fountainButton.bottom() + 10);
+			optimizedFountainButton.on("mouseUp", function () {
+				if (optimizedfountain === undefined) {
+					optimizedfountain = new OptimizedFountain();
+					world.addMorph(optimizedfountain);
+					optimizedFountainButton.label("Stop optimized fountain");
+				} else {
+					optimizedfountain.stop();
+					optimizedfountain = undefined;
+					optimizedFountainButton.label("Start optimized fountain");
+				}
+			});
+			
+			/*
 			"Guybrush Threepwood" walking demo
 			*/
 			var threepwoodButton = new Button();
 			buttons.push(threepwoodButton);
 			threepwoodButton.label("Guybrush Threepwood");
-			threepwoodButton.left(fountainButton.left());
-			threepwoodButton.top(fountainButton.bottom() + 10);
+			threepwoodButton.left(optimizedFountainButton.left());
+			threepwoodButton.top(optimizedFountainButton.bottom() + 10);
 			threepwoodButton.on("mouseUp", function () {
 				world.addMorph(new GuybrushThreepwood());
 			});
