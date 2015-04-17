@@ -10,7 +10,7 @@ var Ellipse = (function () {
         drawOn: function (canvas) {
 			var c = this.center();
 			var w = this.width();
-            canvas.fillArc(c.x, c.y, w, 0, Math.PI * 2, false, this.color());
+            canvas.fillArc(c.x, c.y, Math.floor(w / 2), 0, Math.PI * 2, false, this.color());
         }
     });
     
