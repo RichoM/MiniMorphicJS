@@ -39,6 +39,18 @@ var Canvas = (function () {
             callback.apply(that);
             ctx.globalAlpha = oldAlpha;
         };
+		this.clipped = function (rect, callback, that) {
+			ctx.save();
+			ctx.beginPath();
+			ctx.rect(
+				Math.floor(rect.x), 
+				Math.floor(rect.y), 
+				Math.ceil(rect.w), 
+				Math.ceil(rect.h));
+			ctx.clip();
+			callback.apply(that);
+			ctx.restore();
+		}
     }
     
     return Canvas;

@@ -41,6 +41,7 @@ var Morph = (function () {
         };
         this.bounds = function (val) {
             if (val !== undefined) {
+				this.changed(); // ACAACA Richo: Merge the two bounds into one and call invalidRect() once?
                 bounds = val;
                 this.changed();
             }
@@ -48,7 +49,8 @@ var Morph = (function () {
         };
         this.position = function (val) {
             if (val !== undefined) {
-                this.moveDelta({
+				this.changed(); // ACAACA Richo: Merge the two bounds into one and call invalidRect() once?
+                this.privateMoveDelta({
                     x: val.x - bounds.x,
                     y: val.y - bounds.y
                 });
@@ -61,6 +63,7 @@ var Morph = (function () {
         };
         this.extent = function (val) {
             if (val !== undefined) {
+				this.changed(); // ACAACA Richo: Merge the two bounds into one and call invalidRect() once?
                 bounds.w = val.w;
                 bounds.h = val.h;
                 this.changed();
@@ -134,11 +137,15 @@ var Morph = (function () {
             }
             return this;
         };
-        this.moveDelta = function (delta) {
+		/*
+		This method only updates the bounds but without marking it as dirty.
+		Use translate(delta) instead.
+		*/
+        this.privateMoveDelta = function (delta) {
             bounds.x = bounds.x + delta.x;
             bounds.y = bounds.y + delta.y;
             this.submorphsDo(function (each) {
-                each.moveDelta(delta);
+                each.privateMoveDelta(delta);
             });
         };
     }
@@ -164,6 +171,16 @@ var Morph = (function () {
 			}
 			return this.extent().h;
 		},
+		fullBounds: function () {
+			// ACAACA Richo: This should return the bounds including all submorphs. I just make a copy for now
+			var bounds = this.bounds();
+			return {
+				x: bounds.x,
+				y: bounds.y,
+				w: bounds.w,
+				h: bounds.h
+			};
+		},
         remove: function () {
             var owner = this.owner();
             if (owner !== undefined) {
@@ -178,12 +195,21 @@ var Morph = (function () {
                     && point.x < (bounds.x + bounds.w)
                     && point.y < (bounds.y + bounds.h);
         },
+		world: function () {
+			var owner = this.owner();			
+			return owner !== undefined ? 
+				owner.world() : 
+				undefined;
+		},
         changed: function () {
-            var owner = this.owner();
-            if (owner !== undefined) {
-                owner.changed();
-            }
+            this.invalidRect(this.fullBounds());
         },
+		invalidRect: function (rect) {
+			var world = this.world();
+            if (world !== undefined) {
+                world.registerDirtyRectangle(rect);
+            }
+		},
 		left: function (val) {
 			if (val !== undefined) {
 				this.position({
@@ -269,6 +295,11 @@ var Morph = (function () {
                 y: bounds.y + (bounds.h / 2)
             };
         },
+		translate: function (delta) {
+			this.changed();
+			this.privateMoveDelta(delta);
+			this.changed();
+		},
         drawOn: function (canvas) {
             canvas.fillRectangle(this.bounds(), this.color());
         },

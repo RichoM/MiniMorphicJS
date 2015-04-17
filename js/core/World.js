@@ -45,7 +45,7 @@ var World = (function () {
         html.height = window.innerHeight;
         html.style.position = "fixed";
         var canvas = new Canvas(html);
-        var invalidRect = false;
+        var dirtyRectangles = [];
                 
         this.html = function () {
             return html;
@@ -53,11 +53,11 @@ var World = (function () {
         this.canvas = function () {
             return canvas;
         };
-        this.invalidRect = function (val) {
-            if (arguments.length > 0) {
-                invalidRect = val;
+        this.dirtyRectangles = function (val) {
+            if (val !== undefined) {
+                dirtyRectangles = val;
             }
-            return invalidRect;
+            return dirtyRectangles;
         };
         this.owner = function () {
             return undefined;
@@ -86,13 +86,33 @@ var World = (function () {
     }
     
     World.methods({
-        changed: function () {
-            this.invalidRect(this.bounds());
-        },
-        draw: function () {
+		registerDirtyRectangle: function (rect) {
+			this.dirtyRectangles().push(rect);
+		},
+		clearDirtyRectangles: function () {
+			this.dirtyRectangles([]);
+		},
+		world: function () {
+			return this;
+		},
+        fullRedraw: function () {
             var canvas = this.canvas();
-            this.fullDrawOn(canvas);
-        },        
+			this.fullDrawOn(canvas);
+			this.clearDirtyRectangles();
+        },
+		redrawDirtyRectangles: function () {
+			var canvas = this.canvas();
+			var dirtyRectangles = this.dirtyRectangles();
+			
+			dirtyRectangles.forEach(function (rect) {
+				canvas.clipped(rect, function () {
+					this.fullDrawOn(canvas);
+				}, this);
+			}, this);
+			
+			this.clearDirtyRectangles();
+			return true;
+		},
         drawOn: function (canvas) {
             canvas.clearRectangle(this.bounds());
         },
@@ -126,11 +146,15 @@ var World = (function () {
         initializeStepping: function () {
             var that = this; // FUCKING Javascript!
             function step (now) {
+				// Perform all steps
                 that.fullStep(now);
-                if (that.invalidRect()) {
-                    that.draw();
-					that.invalidRect(undefined);
-                }
+				
+				// First try to redraw only the dirty rectangles
+				if (!that.redrawDirtyRectangles()) {
+					// If that didn't work, redraw the whole screen
+					that.fullRedraw();
+				}
+				
                 window.requestAnimationFrame(step);
             }
             window.requestAnimationFrame(step);
