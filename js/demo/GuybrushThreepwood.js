@@ -9,6 +9,7 @@ var GuybrushThreepwood = (function () {
 		var world = World.current();
 		this.top(Math.random() * (world.height() - this.height()));
 		this.right(0);
+		//this.center(world.center());
 				
 		// Animate
 		var last = 0;
@@ -22,7 +23,7 @@ var GuybrushThreepwood = (function () {
 			this.form(Form.get(key.toString()));
 			
 			// Move to the right
-			this.moveDelta({ x: 25, y: 0 });
+			this.translate({ x: 25, y: 0 });
 			
 			// Remove if outside the world
 			if (this.left() > world.right()) {

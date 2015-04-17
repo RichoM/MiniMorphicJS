@@ -1,18 +1,18 @@
 
 var BouncingBall = (function () {
     
-    BouncingBall.inherits(Ellipse);
+    BouncingBall.inherits(Morph);
     function BouncingBall() {
-        Ellipse.call(this);
+        Morph.call(this);
 		
 		var speed = Math.random() * -2.5;
 		this.speed = function () { return speed; };
 		
 		var world = World.current();
 		var extent = Math.random() * 150;
-		this.color("red");
+		//this.color("red");
 		this.extent({ w: extent, h: extent });
-		this.alpha(Math.random());
+		//this.alpha(Math.random());
 		this.center({
 			x: Math.random() * world.width(),
 			y: Math.random() * (world.height() * 0.5)
@@ -20,11 +20,7 @@ var BouncingBall = (function () {
 		
 		this.on("step", function () {
 			// Fall
-			var center = this.center();		
-			this.center({ 
-				x: center.x,
-				y: center.y + speed
-			});
+			this.translate({ x: 0, y: speed });
 			
 			speed += 0.1; // Accelerate
 			

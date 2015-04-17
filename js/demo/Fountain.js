@@ -55,7 +55,7 @@ var Fountain = (function () {
 			};
 			
 			particle.on("step", function (now) {
-				particle.moveDelta(speed);
+				particle.translate(speed);
 				
 				speed.y += 0.1; // Accelerate
 				
