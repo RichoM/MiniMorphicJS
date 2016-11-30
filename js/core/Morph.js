@@ -141,6 +141,34 @@ var Morph = (function () {
                 each.moveDelta(delta);
             });
         };
+		this.bringToFront = function (morph) {
+			if (morph === undefined) {
+				if (owner) { 
+					owner.bringToFront(this);
+				}
+			} else {
+				var index = submorphs.indexOf(morph);
+				if (index >= 0) {
+					submorphs.splice(index, 1);
+					submorphs.push(morph);
+					this.changed();
+				}
+			}
+		};
+		this.sendToBack = function (morph) {
+			if (morph === undefined) {
+				if (owner) {
+					owner.sendToBack(this);
+				}
+			} else {
+				var index = submorphs.indexOf(morph);
+				if (index >= 0) {
+					submorphs.splice(index, 1);
+					submorphs.unshift(morph);
+					this.changed();
+				}
+			}
+		};
     }
     
     Morph.methods({
