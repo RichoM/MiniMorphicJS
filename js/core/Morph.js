@@ -172,6 +172,11 @@ var Morph = (function () {
     }
     
     Morph.methods({
+		isSubmorphOf: function (morph) {
+			var owner = this.owner();
+			if (owner === undefined) return false;
+			return owner === morph || owner.isSubmorphOf(morph);
+		},
 		width: function (val) {
 			if (val !== undefined) {
 				this.extent({
