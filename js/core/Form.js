@@ -46,6 +46,25 @@ var Form = (function () {
             return data[3];
         };
     }
+	
+	Form.methods({
+		tint: function (r, g, b) {
+			var img = this.img();
+			var rgbks = generateRGBKs(img);
+			var tintImg = generateTintImage(img, rgbks, r, g, b);
+			
+			var canvas = document.createElement("canvas");
+			canvas.width = img.width;
+			canvas.height = img.height;
+			var ctx = canvas.getContext("2d");
+			ctx.fillStyle = "black";
+			//ctx.fillRect(0, 0, canvas.width, canvas.height);			
+			ctx.drawImage(tintImg, 0, 0);
+			var result = new Image();
+			result.src = canvas.toDataURL();
+			return new Form(result);
+		}
+	});
        
     Form.classMethods({
         load: function (sources, callback) {
@@ -57,7 +76,6 @@ var Form = (function () {
                 var key = source.key || src;
                 
                 var img = new Image();
-                img.src = src;
                 img.onload = function () {
                     count++;
                     if (count >= sources.length) {
@@ -68,6 +86,7 @@ var Form = (function () {
                         }));
                     }
                 };
+                img.src = src;
                 entries[i] = {
                     key: key,
                     img: img
@@ -129,6 +148,33 @@ var Form = (function () {
         }
 
         return rgbks;
+    }
+	function generateTintImage( img, rgbks, red, green, blue ) {
+        var buff = document.createElement( "canvas" );
+        buff.width  = img.width;
+        buff.height = img.height;
+        
+        var ctx  = buff.getContext("2d");
+
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'copy';
+        ctx.drawImage( rgbks[3], 0, 0 );
+
+        ctx.globalCompositeOperation = 'lighter';
+        if ( red > 0 ) {
+            ctx.globalAlpha = red   / 255.0;
+            ctx.drawImage( rgbks[0], 0, 0 );
+        }
+        if ( green > 0 ) {
+            ctx.globalAlpha = green / 255.0;
+            ctx.drawImage( rgbks[1], 0, 0 );
+        }
+        if ( blue > 0 ) {
+            ctx.globalAlpha = blue  / 255.0;
+            ctx.drawImage( rgbks[2], 0, 0 );
+        }
+
+        return buff;
     }
 
     
