@@ -148,7 +148,11 @@ var Form = (function () {
         }
 
         return rgbks;
-    }
+    }	
+
+    /*
+     * Code taken from: http://www.playmycode.com/blog/2011/06/realtime-image-tinting-on-html5-canvas/
+     */
 	function generateTintImage( img, rgbks, red, green, blue ) {
         var buff = document.createElement( "canvas" );
         buff.width  = img.width;
