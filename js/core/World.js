@@ -35,6 +35,7 @@ var World = (function () {
     }());
 	
 	var instances = [];
+	var cursor = { x: 0, y: 0 };
     
     World.inherits(Morph);
     function World(htmlCanvas) {
@@ -120,7 +121,7 @@ var World = (function () {
             });
             html.addEventListener("mousemove", function (evt) {
                 that.fullHandleMouseMove(evt, lastCursorPosition);
-                lastCursorPosition = { x: evt.x, y: evt.y };
+                cursor = lastCursorPosition = { x: evt.x, y: evt.y };
             });
         },
         initializeStepping: function () {
@@ -143,6 +144,9 @@ var World = (function () {
 		},
 		current: function () {
 			return instances[instances.length - 1];
+		},
+		cursor: function () {
+			return cursor;
 		}
 	});
     
