@@ -22,6 +22,7 @@
 		<script src="js/puzzle/Puzzle.js"></script>
 		
 		<script>
+		var puzzles = [];
 		// First we load all the images we're going to use
 		Form.load([
 			{ key: "puzzle", src: "images/puzzle_bevel.png" }
@@ -31,7 +32,7 @@
 			
 			var world = new World();
 			
-			for (var i = 0; i < 50; i++) {
+			for (var i = 0; i < 15; i++) {
 				function rnd(n) { return Math.random() * n; }
 				var puzzle = new Puzzle(forms[0]);
 				puzzle.center({
@@ -40,6 +41,7 @@
 				});
 				puzzle.tint(rnd(255), rnd(255), rnd(255));
 				world.addMorph(puzzle);
+				puzzles.push(puzzle);
 			}
 		});
 		</script>
