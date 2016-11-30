@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Puzzle demo</title>
+	</head>
+	<body style="margin: 0">
+		<h2 id="loading">Loading...</h2>
+		<canvas id="world" oncontextmenu="return false"></canvas>
+		
+		<script src="js/libraries/oop.js"></script>
+		
+		<script src="js/core/KeyCode.js"></script>
+		<script src="js/core/Canvas.js"></script>
+		<script src="js/core/Form.js"></script>
+		<script src="js/core/EventHandler.js"></script>
+		<script src="js/core/Morph.js"></script>
+		<script src="js/core/World.js"></script>
+		<script src="js/core/Sprite.js"></script>
+		<script src="js/core/Ellipse.js"></script>
+		<script src="js/core/Button.js"></script>
+		
+		<script src="js/puzzle/Puzzle.js"></script>
+		
+		<script>
+		// First we load all the images we're going to use
+		Form.load([
+			{ key: "puzzle", src: "images/puzzle_bevel.png" }
+		], function (forms) {
+			// Remove loading
+			document.body.removeChild(loading);
+			
+			var world = new World();
+			
+			for (var i = 0; i < 50; i++) {
+				function rnd(n) { return Math.random() * n; }
+				var puzzle = new Puzzle(forms[0]);
+				puzzle.center({
+					x: rnd(world.width()),
+					y: rnd(world.height())
+				});
+				puzzle.tint(rnd(255), rnd(255), rnd(255));
+				world.addMorph(puzzle);
+			}
+		});
+		</script>
+	</body>
+</html>
