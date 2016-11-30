@@ -5,6 +5,10 @@ var Sprite = (function () {
     function Sprite(form) {
         Morph.call(this);
         
+		var originalForm = form;
+		this.originalForm = function () {
+			return originalForm;
+		}
         this.form = function (val) {
             if (val !== undefined 
                     && val !== form) {
@@ -42,7 +46,10 @@ var Sprite = (function () {
                 x: point.x - pos.x,
                 y: point.y - pos.y
             });
-        }
+        },
+		tint: function (r, g, b) {
+			this.form(this.originalForm().tint(r, g, b));
+		}
     });
         
     return Sprite;
