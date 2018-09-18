@@ -239,7 +239,7 @@ var Morph = (function () {
 		removeMorph(morph) {
 			let index = this.submorphs.indexOf(morph);
 			if (index >= 0) {
-				morph.owner(undefined);
+				morph.owner=undefined;
 				this.submorphs.splice(index, 1);
 				this.changed();
 				morph.trigger("removed", [this]);

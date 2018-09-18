@@ -23,7 +23,7 @@ class Canvas {
 		this.ctx.fill();
 	}
 	drawImage(rect, form) {
-		this.ctx.drawImage(form.img(), rect.x, rect.y, rect.w, rect.h);
+		this.ctx.drawImage(form.img, rect.x, rect.y, rect.w, rect.h);
 	}
 	clearRectangle(rect) {
 		this.ctx.clearRect(rect.x, rect.y, rect.w, rect.h);
