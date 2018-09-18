@@ -255,6 +255,15 @@ var Morph = (function () {
 			}
 			return this;
 		}
+		removeAllSubmorphs() {
+			let toRemove = [];
+			this.submorphsDo(function (morph) {
+				toRemove.push(morph);
+			});
+			toRemove.forEach(function (morph) {
+				morph.remove();
+			});
+		}
 		reversedSubmorphsDo(callback, that) {
 			that = that || this;
 			for (var i = this.submorphs.length - 1; i >= 0; i--) {
