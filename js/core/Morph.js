@@ -120,7 +120,7 @@ var Morph = (function () {
 		 * We also need the absolute alpha in order to draw.
 		 */
 		get absoluteAlpha() {
-			return alpha * (owner ? owner.absoluteAlpha() : 1);
+			return this.alpha * (this.owner ? this.owner.absoluteAlpha : 1);
 		}
 		get color() {
 			return this._color;

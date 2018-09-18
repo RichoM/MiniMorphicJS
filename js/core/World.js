@@ -98,7 +98,7 @@ var World = (function () {
 		//methods.
 
 		changed() {
-			this.invalidRect(this.bounds);
+			this.invalidRect=this.bounds;
 		}
 		draw() {
 			this.fullDrawOn(this.canvas);
@@ -145,7 +145,7 @@ var World = (function () {
 				that.fullStep(now);
 				if (that.invalidRect) {
 					that.draw();
-					that.invalidRect(undefined);
+					that.invalidRect=undefined;
 				}
 				window.requestAnimationFrame(step);
 			}
