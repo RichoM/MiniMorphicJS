@@ -232,14 +232,14 @@ var Morph = (function () {
 		addMorph(morph) {
 			morph.remove();
 			this.submorphs.push(morph);
-			morph.owner=this;
+			morph.owner = this;
 			this.changed();
 			return this;
 		}
 		removeMorph(morph) {
 			let index = this.submorphs.indexOf(morph);
 			if (index >= 0) {
-				morph.owner=undefined;
+				morph.owner = undefined;
 				this.submorphs.splice(index, 1);
 				this.changed();
 				morph.trigger("removed", [this]);
@@ -267,10 +267,7 @@ var Morph = (function () {
 		moveDelta(delta) {
 			this.bounds.x = this.bounds.x + delta.x;
 			this.bounds.y = this.bounds.y + delta.y;
-			//TODO: remove this when the position becomes relative to the owner
-			this.submorphsDo(function (each) {
-				each.moveDelta(delta);
-			});
+
 		}
 		bringToFront() {
 			if (this.owner) {
@@ -335,9 +332,11 @@ var Morph = (function () {
 		fullDrawOn(canvas) {
 			canvas.withAlpha(this.absoluteAlpha, function () {
 				this.drawOn(canvas);
-				this.submorphsDo(function (submorph) {
-					submorph.fullDrawOn(canvas);
-				});
+				canvas.withOffset(this.position, function () {
+					this.submorphsDo(function (submorph) {
+						submorph.fullDrawOn(canvas);
+					});
+				}, this);
 			}, this);
 		}
 

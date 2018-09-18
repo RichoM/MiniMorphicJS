@@ -3,6 +3,7 @@ class Canvas {
 		//TODO: use private fields when it is on the ECMA standard
 		this._html = html;
 		this._ctx = html.getContext("2d");
+
 	}
 	get ctx() {
 		return this._ctx;
@@ -50,5 +51,11 @@ class Canvas {
 		this.ctx.globalAlpha = alpha;
 		callback.apply(that);
 		this.ctx.globalAlpha = oldAlpha;
+	}
+	withOffset(offset, callback, that) { 
+		this.ctx.translate(offset.x , offset.y );
+		callback.apply(that);
+		this.ctx.translate(-offset.x , -offset.y );
+
 	}
 }
