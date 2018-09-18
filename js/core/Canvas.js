@@ -44,7 +44,9 @@ class Canvas {
 			this.ctx.textBaseline = textBaseline;
 		}
 		this.ctx.fillText(text, position.x, position.y);
+		let metrics = this.ctx.measureText(text);
 		this.ctx.restore();
+		return metrics;
 	}
 	withAlpha(alpha, callback, that) {
 		var oldAlpha = this.ctx.globalAlpha;
