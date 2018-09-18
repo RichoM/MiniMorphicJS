@@ -24,6 +24,7 @@ class Execution	 extends Morph{
 		this.stepHeight=10;
 		
 		this.state="idle";
+		this.switchCost=processor.switchCost;
 		this.currentProc=undefined;
 		this.idleTime=0;
 		this.switchTime=0;
@@ -42,24 +43,23 @@ class Execution	 extends Morph{
 		return ! this.processes.some(m=>m.work>0);
 	}
 	tick(){
-		let selected= this.processor.selectProcess(this.processes,this.time);
-		if(this.finished){return;}
+		let selected=null;
+		if(this.finished){return}
 		if(this.state=="switch"){
-			if(selected){	
-				if(this.nextProc==selected){
-					this.state="processing";
-					this.currentProc=selected;
-					this.nextProc=undefined;
-				}else{
-					this.state=="switch";
-					this.createHistoryStep("#999999");
-					this.switchTime++;
-					this.nextProc=selected;
-				}
-			}else{ 
-				this.state="idle";
+			if(this.switchCost>0){
+				this.switchCost--;
+				this.createHistoryStep("#999999");
+				this.switchTime++;
+			}else{
+				this.state="processing";
+				this.currentProc=this.nextProc;
+				this.nextProc=undefined;
+				selected=this.currentProc;
+				this.switchCost=this.processor.switchCost;
 			}
 		}
+		selected=selected|| this.processor.selectProcess(this.processes,this.time);
+		
 		if(this.state=="idle"){
 			if(selected){	
 				this.state="processing";
@@ -71,17 +71,19 @@ class Execution	 extends Morph{
 		}
 		let workDone=null;
 		if(this.state=="processing"){
-			if(this.currentProc==selected){
+			if(this.currentProc==selected || this.switchCost==0){
 				this.currentProc.work--;
 				workDone=this.currentProc;
 				this.createHistoryStep(selected.color);
 				if(this.currentProc.work==0){this.state="idle";}
 			}else{
-				//ctxt switch.
-				this.state=="switch";
-					this.createHistoryStep("#999999");
-					this.switchTime++;
-					this.nextProc=selected;
+				//ctxt switch. 
+				this.state="switch";
+				this.createHistoryStep("#999999");
+				this.switchCost=this.processor.switchCost-1;
+				this.switchTime++;
+				this.nextProc=selected;
+				 
 			}
 		}
 		this.processes.forEach((e)=>{if(e!=workDone && e.work>0){e.wait++;}});

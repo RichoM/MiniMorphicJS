@@ -37,12 +37,44 @@
 			processes.push( new Process("P3",20,2,5,"green"));
 			processes.push( new Process("P4",3,0,0,"pink"));
 			
-			processors.push(new Processor("FCFS","Blue",(state,time)=>{
+			processors.push(new Processor("FCFS","Blue",0,(state,time)=>{
 				let a = state.filter(p=>p.work>0 && p.arrive<=time);
 				a.sort((l,r)=>l.arrive-r.arrive);
 				return a.length>0?a[0]:undefined;
 			}));
-			//processors.push(new Processor("RR 1 0","Green"));
+			let lastRR=undefined;
+			processors.push(new Processor("RR 1 0","Green",0,
+			(state,time)=>{
+				let bi=state.indexOf(lastRR) + 1;
+				
+				for(let i=0;i<state.length;i++){
+					let c= state[(i+bi)%state.length];
+					if(c.work>0 && c.arrive<=time){
+						lastRR=c;
+						return c;
+					}
+				}
+				return undefined;
+			}));
+			let lastRR31=undefined;
+			let RR31execs=0;
+			processors.push(new Processor("RR 3 1","Orange",1,
+			(state,time)=>{
+				let bi=state.indexOf(lastRR31) + 1;
+				if(lastRR31&&lastRR31.work>0 && RR31execs>0){
+					RR31execs--;				
+					return lastRR31;
+				}
+				for(let i=0;i<state.length;i++){
+					let c= state[(i+bi)%state.length];
+					if(c.work>0 && c.arrive<=time){
+						lastRR31=c;
+						RR31execs=2;
+						return c;
+					}
+				}
+				return undefined;
+			}));
 			
 		   
 			 

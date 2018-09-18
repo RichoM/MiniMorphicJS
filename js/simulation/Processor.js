@@ -1,8 +1,9 @@
 class Processor extends Morph {
-	constructor(name, color, selectionFunction) {
+	constructor(name, color,switchCost, selectionFunction) {
 		super();
 		this.name = name;  
 		this.selectionFunction=selectionFunction;
+		this.switchCost=switchCost;
 	}
 
 	get name() {
