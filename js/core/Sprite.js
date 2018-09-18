@@ -1,56 +1,50 @@
+class Sprite extends Morph {
+	constructor(form) {
+		super();
+		//TODO: use private fields when it is on the ECMA standard
+		this._originalForm = form;
+		this._form = form;
+		this.resize();
+	}
+	//Properties
+	get originalForm() {
+		return this._originalForm;
+	}
+	get form() {
+		return this._form;
+	}
+	set form(val) {
+		if (val !== undefined && val !== this._form) {
+			this._form = val;
+			this.resize();
+		}
+		return this.form;
+	}
+	//Methods
+	containsPoint(point) {
+		return super.containsPoint(point) && this.alphaAt(point) > 0;
+	}
 
-var Sprite = (function () {
-    
-    Sprite.inherits(Morph);
-    function Sprite(form) {
-        Morph.call(this);
-        
-		var originalForm = form;
-		this.originalForm = function () {
-			return originalForm;
+	drawOn(canvas) {
+		let form = this.form;
+		if (form !== undefined) {
+			canvas.drawImage(this.bounds, form);
 		}
-        this.form = function (val) {
-            if (val !== undefined 
-                    && val !== form) {
-                form = val;
-                this.resize();
-            }
-            return form;
-        };
-		
-		var superContainsPoint = this.containsPoint;
-		this.containsPoint = function (point) {
-            return superContainsPoint.call(this, point)
-					&& this.alphaAt(point) > 0;
-        };
-        
-        this.resize();
-    }
-    
-    Sprite.methods({
-        drawOn: function (canvas) {
-            var form = this.form();
-            if (form !== undefined) {
-                canvas.drawImage(this.bounds(), form);
-            }
-        },        
-        resize: function () {
-            var form = this.form();
-            if (form !== undefined) {
-                this.extent(form.extent());
-            }
-        },
-        alphaAt: function (point) {
-            var pos = this.position();
-            return this.form().alphaAt({
-                x: point.x - pos.x,
-                y: point.y - pos.y
-            });
-        },
-		tint: function (r, g, b) {
-			this.form(this.originalForm().tint(r, g, b));
+	}
+	resize() {
+		let form = this.form;
+		if (form !== undefined) {
+			this.extent = form.extent;
 		}
-    });
-        
-    return Sprite;
-})();
+	}
+	alphaAt (point) {
+		let pos = this.position;
+		return this.form.alphaAt({
+			x : point.x - pos.x,
+			y : point.y - pos.y
+		});
+	}
+	tint  (r, g, b) {
+		this.form = this.originalForm.tint(r, g, b);
+	}
+}
