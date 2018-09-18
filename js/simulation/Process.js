@@ -1,15 +1,15 @@
 class Process extends Morph {
-	constructor(name, work, priority, color) {
+	constructor(name, work, priority,at, color) {
 		super();
 		this.name = name;
 		this.work = work;
 		this.priority = priority;
 		this.wait = 0;
 		this.color = color;
+		this.arrive=at;
 		this.border = 5;
 		this.view = new VerticalView();
-		this.addMorph(this.view);
-		this.view.adjustWidth=true;
+		this.addMorph(this.view); 
 		this.on("step", function (now) {
 			this.height=this.view.requiredHeight+2*this.border;
 			this.width=this.view.requiredWidth+2*this.border;
@@ -21,8 +21,9 @@ class Process extends Morph {
 			};
 			this.view.removeAllSubmorphs();
 			this.view.addMorph(new StringMorph(this.name));
-			this.view.addMorph(new StringMorph("w: "+ this.work));
-			this.view.addMorph(new StringMorph("t: "+ this.wait));
+			this.view.addMorph(new StringMorph("a: "+ this.arrive));
+			this.view.addMorph(new StringMorph("c: "+ this.work));
+			this.view.addMorph(new StringMorph("w: "+ this.wait));
 			this.view.addMorph(new StringMorph("p: "+ this.priority));
 		});
 	}
@@ -34,6 +35,13 @@ class Process extends Morph {
 		this._name = val;
 		this.changed();
 		return this.name;
+	}get arrive() {
+		return this._arrive;
+	}
+	set arrive(val) {
+		this._arrive = val;
+		this.changed();
+		return this.arrive;
 	}
 
 	get work() {
@@ -71,7 +79,9 @@ class Process extends Morph {
 		this.changed();
 		return this.border;
 	}
-
+	clone(){
+		return new Process(this.name,this.work,this.priority,this.arrive,this.color);
+	}
 	drawOn(canvas) {
 		canvas.fillRectangle(this.bounds, this.color);
 	}

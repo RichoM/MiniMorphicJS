@@ -20,14 +20,50 @@
 		<script src="js/layout/HorizontalView.js"></script>
 		<script src="js/layout/VerticalView.js"></script>
 		<script src="js/simulation/Process.js"></script>
+		<script src="js/simulation/Processor.js"></script>
+		<script src="js/simulation/Execution.js"></script>
 		  
 		
 		<script>
 		// First we load all the images we're going to use
 			var world = new World();
-			let hv=new HorizontalView();
-			let p = new Process("P1",10,3,"red");
-			world.addMorph(p);
+			let vv = new VerticalView();
+			vv.color="#222222"; 
+			world.addMorph(vv);
+			let processes=[];
+			let processors = [];
+			processes.push( new Process("P1",10,1,1,"red"));
+			processes.push( new Process("P2",5,3,3,"blue"));
+			processes.push( new Process("P3",20,2,5,"green"));
+			processes.push( new Process("P4",3,0,0,"pink"));
+			
+			processors.push(new Processor("FCFS","Blue",(state,time)=>{
+				let a = state.filter(p=>p.work>0 && p.arrive<=time);
+				a.sort((l,r)=>l.arrive-r.arrive);
+				return a.length>0?a[0]:undefined;
+			}));
+			//processors.push(new Processor("RR 1 0","Green"));
+			
+		   
+			 
+			
+			let sim = new HorizontalView();
+			let procNames = new VerticalView();
+			let execs= new VerticalView();
+			let executions=[];
+			
+			sim.addMorph(procNames);
+			sim.addMorph(execs);
+			vv.addMorph(sim);
+			processors.forEach(e=>{
+				let ex = new Execution(e,processes);
+				let name= new StringMorph(e.name);
+				name.on("step",()=>{name.height=ex.height;});
+				procNames.addMorph(name);
+				executions.push(ex);
+				execs.addMorph(ex);
+			});
+		
 			
 		</script>
 	</body>
