@@ -44,8 +44,8 @@
 			*/
 			var clearButton = new Button();
 			buttons.push(clearButton);
-			clearButton.label("Clear");
-			clearButton.position({ x: 10, y: 10 });
+			clearButton.label="Clear";
+			clearButton.position={ x: 10, y: 10 };
 			clearButton.on("mouseUp", function () {
 				var toRemove = [];
 				world.submorphsDo(function (morph) {
@@ -64,9 +64,9 @@
 			*/
 			var bounceButton = new Button();
 			buttons.push(bounceButton);
-			bounceButton.label("Bouncing balls");
-			bounceButton.left(clearButton.left());
-			bounceButton.top(clearButton.bottom() + 10);
+			bounceButton.label="Bouncing balls";
+			bounceButton.left=clearButton.left;
+			bounceButton.top=clearButton.bottom + 10;
 			bounceButton.on("mouseUp", function () {
 				for (var i = 0; i < 15; i++) {
 					world.addMorph(new BouncingBall());
@@ -79,18 +79,18 @@
 			var fountainButton = new Button();
 			var fountain = undefined;
 			buttons.push(fountainButton);
-			fountainButton.label("Start fountain");
-			fountainButton.left(bounceButton.left());
-			fountainButton.top(bounceButton.bottom() + 10);
+			fountainButton.label="Start fountain";
+			fountainButton.left=bounceButton.left;
+			fountainButton.top=bounceButton.bottom + 10;
 			fountainButton.on("mouseUp", function () {
 				if (fountain === undefined) {
 					fountain = new Fountain();
 					world.addMorph(fountain);			
-					fountainButton.label("Stop fountain");
+					fountainButton.label="Stop fountain";
 				} else {
 					fountain.stop();
 					fountain = undefined;
-					fountainButton.label("Start fountain");
+					fountainButton.label="Start fountain";
 				}
 			});
 			
@@ -100,18 +100,18 @@
 			var optimizedFountainButton = new Button();
 			var optimizedfountain = undefined;
 			buttons.push(optimizedFountainButton);
-			optimizedFountainButton.label("Start optimized fountain");
-			optimizedFountainButton.left(fountainButton.left());
-			optimizedFountainButton.top(fountainButton.bottom() + 10);
+			optimizedFountainButton.label="Start optimized fountain";
+			optimizedFountainButton.left=fountainButton.left;
+			optimizedFountainButton.top=fountainButton.bottom + 10;
 			optimizedFountainButton.on("mouseUp", function () {
 				if (optimizedfountain === undefined) {
 					optimizedfountain = new OptimizedFountain();
 					world.addMorph(optimizedfountain);
-					optimizedFountainButton.label("Stop optimized fountain");
+					optimizedFountainButton.label="Stop optimized fountain";
 				} else {
 					optimizedfountain.stop();
 					optimizedfountain = undefined;
-					optimizedFountainButton.label("Start optimized fountain");
+					optimizedFountainButton.label="Start optimized fountain";
 				}
 			});
 			
@@ -120,9 +120,9 @@
 			*/
 			var threepwoodButton = new Button();
 			buttons.push(threepwoodButton);
-			threepwoodButton.label("Guybrush Threepwood");
-			threepwoodButton.left(optimizedFountainButton.left());
-			threepwoodButton.top(optimizedFountainButton.bottom() + 10);
+			threepwoodButton.label="Guybrush Threepwood";
+			threepwoodButton.left=optimizedFountainButton.left;
+			threepwoodButton.top=optimizedFountainButton.bottom + 10;
 			threepwoodButton.on("mouseUp", function () {
 				world.addMorph(new GuybrushThreepwood());
 			});
