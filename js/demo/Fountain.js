@@ -13,7 +13,7 @@ class Fountain extends Morph {
 		/* Do nothing */
 	}
 	start() {
-		var center = this.center;
+		let center = this.center;
 		var maxTime = 4000; // Max lifetime of each particle (in ms)
 
 		// Create particles on each step
@@ -28,7 +28,7 @@ class Fountain extends Morph {
 
 		// Make the fountain follow the cursor
 		this.on("mouseMove", function (evt) {
-			this.center = {
+			center = {
 				x : evt.x,
 				y : evt.y
 			};

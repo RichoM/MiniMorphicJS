@@ -9,10 +9,23 @@ class EventHandler {
 	get wantsToHandleMouseMove() {
 		return this._handlesMouseMove;
 	}
+	set wantsToHandleMouseMove(val) {
+		this._handlesMouseMove = val;
+		return this._handlesMouseMove;
+	}
 	get wantsToHandleKeyboard() {
 		return this._handlesKeyboard;
 	}
+	set wantsToHandleKeyboard(val) {
+		this._handlesKeyboard = val;
+		return this._handlesKeyboard;
+	}
 	get wantsToHandleStepping() {
+		return this._handlesStepping;
+	}
+
+	set wantsToHandleStepping(val) {
+		this._handlesStepping = val;
 		return this._handlesStepping;
 	}
 	listenersFor(evtType) {
@@ -27,12 +40,12 @@ class EventHandler {
 		if (evtType === "mouseEnter" ||
 			evtType === "mouseMove" ||
 			evtType === "mouseLeave") {
-			this.handlesMouseMove = true;
+			this.wantsToHandleMouseMove = true;
 		} else if (evtType === "keyDown" ||
 			evtType === "keyUp") {
-			this.handlesKeyboard = true;
+			this.wantsToHandleKeyboard = true;
 		} else if (evtType === "step") {
-			this.handlesStepping = true;
+			this.wantsToHandleStepping = true;
 		}
 		listeners.push({
 			that : that,

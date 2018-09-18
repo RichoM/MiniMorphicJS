@@ -66,7 +66,7 @@ class OptimizedFountain extends Morph {
 	}
 	start() {
 		this._started = true;
-		var center = this.center;
+		let center = this.center;
 
 		this.on("step", function (now) {
 			// Update bounds just in case the windows was resized
@@ -125,7 +125,7 @@ class OptimizedFountain extends Morph {
 
 		// Make the fountain follow the cursor
 		this.on("mouseMove", function (evt) {
-			this.center = {
+			center = {
 				x : evt.x,
 				y : evt.y
 			};
