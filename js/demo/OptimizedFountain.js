@@ -19,7 +19,7 @@ class OptimizedFountain extends Morph {
 		//TODO: use private fields when it is on the ECMA standard
 		this.MAX_PARTICLES = 10000; // How many particles we'll draw
 		this._offset = 0;
-		this._particles = new Float32Array(MAX_PARTICLES * 4);
+		this._particles = new Float32Array(this.MAX_PARTICLES * 4);
 		this._started = false;
 
 		this.bounds = World.current.bounds;
@@ -119,7 +119,7 @@ class OptimizedFountain extends Morph {
 					particles[offset + i] = 0;
 				}
 				// Update the offset so that next time we start on the right place
-				this._offset = (this._offset + 1) % MAX_PARTICLES;
+				this._offset = (this._offset + 1) % this.MAX_PARTICLES;
 			}
 		});
 

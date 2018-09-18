@@ -63,7 +63,7 @@ class Fountain extends Morph {
 			speed.y += 0.1; // Accelerate
 
 			var progress = now - startTime;
-			particle.alpha(1 - (progress / maxTime));
+			particle.alpha= 1 - (progress / maxTime);
 
 			if (progress > maxTime) {
 				particle.remove();
