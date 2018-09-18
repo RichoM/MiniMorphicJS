@@ -47,10 +47,10 @@ var World = (function () {
 
 			//TODO: use private fields when it is on the ECMA standard
 			this._html = htmlCanvas || document.getElementById("world");
-			html.width = window.innerWidth;
-			html.height = window.innerHeight;
-			html.style.position = "fixed";
-			this._canvas = new Canvas(html);
+			this.html.width = window.innerWidth;
+			this.html.height = window.innerHeight;
+			this.html.style.position = "fixed";
+			this._canvas = new Canvas(this.html);
 			this._invalidRect = false;
 
 			this.initializeEventHandling();
