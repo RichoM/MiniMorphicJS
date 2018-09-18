@@ -124,6 +124,12 @@ var Form = (function () {
 				return data[3];
 			};
 		}
+		get extent() {
+			return this._extent;
+		}
+		get img() {
+			return this._img;
+		}
 		tint(r, g, b) {
 			let img = this.img();
 			let rgbks = generateRGBKs(img);
