@@ -11,7 +11,7 @@ class BouncingBall extends Ellipse {
 			h : extent
 		};
 		this.alpha = Math.random();
-		let world = World.current();
+		let world = World.current;
 		this.center = {
 			x : Math.random() * world.width,
 			y : Math.random() * (world.height * 0.5)

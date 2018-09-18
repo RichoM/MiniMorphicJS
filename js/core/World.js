@@ -154,13 +154,13 @@ var World = (function () {
 
 		//static methods
 
-		static instances() {
+		static get instances() {
 			return instances;
 		}
-		static current() {
+		static get current() {
 			return instances[instances.length - 1];
 		}
-		static cursor() {
+		static get cursor() {
 			return cursor;
 		}
 	};

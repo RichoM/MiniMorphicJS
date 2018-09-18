@@ -3,7 +3,7 @@ class GuybrushThreepwood extends Sprite {
 		let key = 0;
 		super(Form.get(key.toString()));
 
-			let world = World.current();
+			let world = World.current;
 			this.top = (Math.random() * (world.height - this.height));
 			this.right = 0;
 			
