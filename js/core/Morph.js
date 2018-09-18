@@ -232,7 +232,7 @@ var Morph = (function () {
 		addMorph(morph) {
 			morph.remove();
 			this.submorphs.push(morph);
-			morph.owner(this);
+			morph.owner=this;
 			this.changed();
 			return this;
 		}
