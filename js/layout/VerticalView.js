@@ -5,6 +5,7 @@ class VerticalView extends Morph {
 		this.expandsHeight = false;
 		this.adjustsWidth=false;
 		this.requiredHeight=0;
+		this.requiredWidth=0;
 		this.color = "black";
 		this.on("step", function (now) {
 			if(this.expandsHeight && this.owner)
@@ -24,8 +25,9 @@ class VerticalView extends Morph {
 					current += sm.height + sep;
 				});
 			this.requiredHeight=current;
+			let desiredWidth = maxW + (2 * sep);
+			this.requiredWidth=desiredWidth;
 			if(this.adjustsWidth){
-				let desiredWidth = maxW + (2 * sep);
 				this.width = (this.owner)? (this.owner.width<desiredWidth)?this.owner.width:desiredWidth :desiredWidth;
 			}
 		});
