@@ -15,16 +15,19 @@
 		<script src="js/core/World.js"></script>
 		<script src="js/core/Sprite.js"></script>
 		<script src="js/core/Ellipse.js"></script>
+		<script src="js/core/StringMorph.js"></script>
 		<script src="js/core/Button.js"></script>
 		<script src="js/layout/HorizontalView.js"></script>
 		<script src="js/layout/VerticalView.js"></script>
-		 
+		<script src="js/simulation/Process.js"></script>
+		  
 		
 		<script>
 		// First we load all the images we're going to use
 			var world = new World();
 			let hv=new HorizontalView();
-			World.current.addMorph(hv);
+			let p = new Process("P1",10,3,"red");
+			world.addMorph(p);
 			
 		</script>
 	</body>
