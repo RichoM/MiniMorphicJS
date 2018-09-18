@@ -38,9 +38,12 @@ class Execution	 extends Morph{
 		m.bounds={x:0,y:0,w:this.stepWidth,h:this.stepHeight};
 		this.history.addMorph(m);
 	}
+	get finished(){
+		return ! this.processes.some(m=>m.work>0);
+	}
 	tick(){
 		let selected= this.processor.selectProcess(this.processes,this.time);
- 
+		if(this.finished){return;}
 		if(this.state=="switch"){
 			if(selected){	
 				if(this.nextProc==selected){
@@ -61,10 +64,9 @@ class Execution	 extends Morph{
 			if(selected){	
 				this.state="processing";
 				this.currentProc=selected;
-			}else{
-				
-				this.createHistoryStep("#FFFFFF");
-				this.idleTime++;
+			}else{ 
+					this.createHistoryStep("#FFFFFF");
+					this.idleTime++; 
 			}
 		}
 		let workDone=null;
@@ -83,6 +85,7 @@ class Execution	 extends Morph{
 			}
 		}
 		this.processes.forEach((e)=>{if(e!=workDone && e.work>0){e.wait++;}});
+
 		this.time++;
 	}
 }
