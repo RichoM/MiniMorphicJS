@@ -48,7 +48,7 @@ class Execution	 extends Morph{
 		if(this.state=="switch"){
 			if(this.switchCost>0){
 				this.switchCost--;
-				this.createHistoryStep("#999999");
+				this.createHistoryStep("#FFFF00");
 				this.switchTime++;
 			}else{
 				this.state="processing";
@@ -79,7 +79,7 @@ class Execution	 extends Morph{
 			}else{
 				//ctxt switch. 
 				this.state="switch";
-				this.createHistoryStep("#999999");
+				this.createHistoryStep("#FFFF00");
 				this.switchCost=this.processor.switchCost-1;
 				this.switchTime++;
 				this.nextProc=selected;
