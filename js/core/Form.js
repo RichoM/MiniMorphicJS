@@ -167,6 +167,5 @@ var Form = (function () {
         Promise.all(sources.map(Form.loadImage)).then(resolve);
       });
 		}
-
 	};
 })();

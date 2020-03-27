@@ -440,19 +440,19 @@ var Morph = (function () {
 			});
 		}
 
-		handleStep(now) {
-			return this.eventHandler.handleStep(now);
+		handleStep(now, delta) {
+			return this.eventHandler.handleStep(now, delta);
 		}
 
 		wantsToHandleStepping() {
 			return this.eventHandler.wantsToHandleStepping();
 		}
-		fullStep(now) {
+		fullStep(now, delta) {
 			if (this.wantsToHandleStepping) {
-				this.handleStep(now);
+				this.handleStep(now, delta);
 			}
 			this.submorphsDo(function (submorph) {
-				return submorph.fullStep(now);
+				return submorph.fullStep(now, delta);
 			});
 		}
 

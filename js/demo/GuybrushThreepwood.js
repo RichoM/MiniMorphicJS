@@ -10,10 +10,10 @@ class GuybrushThreepwood extends Sprite {
 			let last = 0;
 
 			// Animate
-			this.on("step", function (now) {
-				// Only step every 150 ms
-				if (now - last < 150)
-					return;
+			this.on("step", function (now, delta) {
+
+				// Only animate every 150 ms
+				if (now - last < 0.15) return;
 				last = now;
 
 				// Next form

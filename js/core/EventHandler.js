@@ -87,8 +87,8 @@ class EventHandler {
 	handleMouseLeave(evt, lastCursorPosition) {
 		return this.handleEvent("mouseLeave", [evt, lastCursorPosition]);
 	}
-	handleStep(now) {
-		return this.handleEvent("step", [now]);
+	handleStep(now, delta) {
+		return this.handleEvent("step", [now, delta]);
 	}
 
 }

@@ -17,12 +17,12 @@ class BouncingBall extends Ellipse {
 			y : Math.random() * (world.height * 0.5)
 		};
 
-		this.on("step", function () {
+		this.on("step", function (now, delta) {
 			// Fall
 			let center = this.center;
 			this.center = {
 				x : center.x,
-				y : center.y + this._speed
+				y : center.y + this._speed * 100 * delta
 			};
 
 			this._speed += 0.1; // Accelerate

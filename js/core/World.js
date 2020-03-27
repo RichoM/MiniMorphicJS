@@ -141,8 +141,11 @@ var World = (function () {
 		}
 		initializeStepping() {
 			var that = this; // FUCKING Javascript!
+			let last = 0;
 			function step(now) {
-				that.fullStep(now);
+				let delta = now - last;
+				last = now;
+				that.fullStep(now/1000, delta/1000);
 				if (that.invalidRect) {
 					that.draw();
 					that.invalidRect=undefined;
