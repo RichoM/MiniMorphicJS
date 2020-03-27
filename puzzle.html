@@ -23,9 +23,7 @@
 		<script>
 		let puzzles = [];
 		// First we load all the images we're going to use
-		Form.load([
-			{ key: "puzzle", src: "images/puzzle_bevel.png" }
-		]).then(function (forms) {
+		Form.loadImage("images/puzzle_bevel.png").then(function (form) {
 			// Remove loading
 			document.body.removeChild(loading);
 
@@ -33,7 +31,7 @@
 
 			for (var i = 0; i < 15; i++) {
 				function rnd(n) { return Math.random() * n; }
-				let puzzle = new Puzzle(forms[0]);
+				let puzzle = new Puzzle(form);
 				puzzle.center = {
 					x: rnd(world.width),
 					y: rnd(world.height)

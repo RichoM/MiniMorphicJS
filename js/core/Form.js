@@ -153,28 +153,18 @@ var Form = (function () {
         });
       });
 		}
+    static loadImage(src) {
+      return new Promise((resolve, reject) => {
+				let img = new Image();
+				img.onload = function () {
+          resolve(new Form(img));
+				};
+				img.src = src;
+      });
+    }
 		static load(sources) {
       return new Promise((resolve, reject) => {
-  			let entries = new Array(sources.length);
-  			let count = 0;
-  			for (let i = 0; i < sources.length; i++) {
-  				let source = sources[i];
-  				let src = source.src;
-  				let key = source.key || src;
-
-  				let img = new Image();
-  				img.onload = function () {
-  					count++;
-  					if (count >= sources.length) {
-  						resolve(entries.map((assoc) => new Form(assoc.img)));
-  					}
-  				};
-  				img.src = src;
-  				entries[i] = {
-  					key : key,
-  					img : img
-  				};
-  			}
+        Promise.all(sources.map(Form.loadImage)).then(resolve);
       });
 		}
 

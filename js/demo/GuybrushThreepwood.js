@@ -1,7 +1,7 @@
 class GuybrushThreepwood extends Sprite {
 	constructor(forms) {
 		let key = 0;
-		super(forms[key.toString()]);
+		super(forms[key]);
 
 			let world = World.current;
 			this.top = (Math.random() * (world.height - this.height));
@@ -18,7 +18,7 @@ class GuybrushThreepwood extends Sprite {
 
 				// Next form
 				key = (key + 1) % 6;
-				this.form = forms[key.toString()];
+				this.form = forms[key];
 
 				// Move to the right
 				this.moveDelta({
