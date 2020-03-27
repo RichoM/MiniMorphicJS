@@ -164,31 +164,33 @@ var Form = (function () {
         });
       });
 		}
-		static load(sources, callback) {
-			let entries = new Array(sources.length);
-			let count = 0;
-			for (let i = 0; i < sources.length; i++) {
-				let source = sources[i];
-				let src = source.src;
-				let key = source.key || src;
+		static load(sources) {
+      return new Promise((resolve, reject) => {
+  			let entries = new Array(sources.length);
+  			let count = 0;
+  			for (let i = 0; i < sources.length; i++) {
+  				let source = sources[i];
+  				let src = source.src;
+  				let key = source.key || src;
 
-				let img = new Image();
-				img.onload = function () {
-					count++;
-					if (count >= sources.length) {
-						callback(entries.map(function (assoc) {
+  				let img = new Image();
+  				img.onload = function () {
+  					count++;
+  					if (count >= sources.length) {
+  						resolve(entries.map(function (assoc) {
 								let form = new Form(assoc.img);
 								setForm(assoc.key, form);
 								return form;
 							}));
-					}
-				};
-				img.src = src;
-				entries[i] = {
-					key : key,
-					img : img
-				};
-			}
+  					}
+  				};
+  				img.src = src;
+  				entries[i] = {
+  					key : key,
+  					img : img
+  				};
+  			}
+      });
 		}
 		static get(key) {
 			return getForm(key);

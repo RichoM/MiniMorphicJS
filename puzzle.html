@@ -25,7 +25,7 @@
 		// First we load all the images we're going to use
 		Form.load([
 			{ key: "puzzle", src: "images/puzzle_bevel.png" }
-		], function (forms) {
+		]).then(function (forms) {
 			// Remove loading
 			document.body.removeChild(loading);
 

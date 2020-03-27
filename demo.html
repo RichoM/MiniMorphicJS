@@ -6,8 +6,8 @@
 	<body style="margin: 0">
 		<h2 id="loading">Loading...</h2>
 		<canvas id="world" oncontextmenu="return false"></canvas>
-		 
-		
+
+
 		<script src="js/core/KeyCode.js"></script>
 		<script src="js/core/Canvas.js"></script>
 		<script src="js/core/Form.js"></script>
@@ -17,12 +17,12 @@
 		<script src="js/core/Sprite.js"></script>
 		<script src="js/core/Ellipse.js"></script>
 		<script src="js/core/Button.js"></script>
-		
+
 		<script src="js/demo/BouncingBall.js"></script>
 		<script src="js/demo/Fountain.js"></script>
 		<script src="js/demo/GuybrushThreepwood.js"></script>
 		<script src="js/demo/OptimizedFountain.js"></script>
-		
+
 		<script>
 		// First we load all the images we're going to use
 		Form.load([
@@ -32,13 +32,13 @@
 			{ key: "3", src: "images/gb4.png" },
 			{ key: "4", src: "images/gb5.png" },
 			{ key: "5", src: "images/gb6.png" }
-		], function () {
+		]).then(function () {
 			// Remove loading
 			document.body.removeChild(loading);
-			
+
 			var world = new World();
 			var buttons = [];
-			
+
 			/*
 			Clear submorphs
 			*/
@@ -58,7 +58,7 @@
 					morph.remove();
 				});
 			});
-			
+
 			/*
 			Small demo of bouncing morphs
 			*/
@@ -72,7 +72,7 @@
 					world.addMorph(new BouncingBall());
 				}
 			});
-			
+
 			/*
 			Simple "fountain" demo
 			*/
@@ -85,7 +85,7 @@
 			fountainButton.on("mouseUp", function () {
 				if (fountain === undefined) {
 					fountain = new Fountain();
-					world.addMorph(fountain);			
+					world.addMorph(fountain);
 					fountainButton.label="Stop fountain";
 				} else {
 					fountain.stop();
@@ -93,7 +93,7 @@
 					fountainButton.label="Start fountain";
 				}
 			});
-			
+
 			/*
 			Optimized "fountain" demo
 			*/
@@ -114,7 +114,7 @@
 					optimizedFountainButton.label="Start optimized fountain";
 				}
 			});
-			
+
 			/*
 			"Guybrush Threepwood" walking demo
 			*/
@@ -126,8 +126,8 @@
 			threepwoodButton.on("mouseUp", function () {
 				world.addMorph(new GuybrushThreepwood());
 			});
-			
-			
+
+
 			// Add buttons to the world
 			buttons.forEach(function (button) {
 				world.addMorph(button);
