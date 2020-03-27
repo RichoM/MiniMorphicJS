@@ -8,22 +8,21 @@ class VerticalView extends Morph {
 		this.requiredWidth=0;
 		this.color = "black";
 		this.on("step", function (now) {
-			
+
 			let sep = this.separator;
 			let current =  sep;
 			let l =  sep;
 			let maxW = 0;
 			this.submorphsDo((sm) => {
-					sm.top = current;
-					sm.left = l;
-					if (sm.width > maxW) {
-						maxW = sm.width;
-					}
-					current += sm.height + sep;
-				});
+				sm.top = this.top + current;
+				sm.left = this.left + l;
+				if (sm.width > maxW) {
+					maxW = sm.width;
+				}
+				current += sm.height + sep;
+			});
 			this.requiredHeight=current;
-			if(this.adjustHeight && this.owner)
-			{
+			if(this.adjustHeight && this.owner) {
 				if(this.height!=this.requiredHeight)
 					this.height=this.requiredHeight;
 			}
@@ -38,4 +37,3 @@ class VerticalView extends Morph {
 	}
 
 }
- 

@@ -9,13 +9,13 @@ class Process extends Morph {
 		this.arrive=at;
 		this.border = 5;
 		this.view = new VerticalView();
-		this.addMorph(this.view); 
+		this.addMorph(this.view);
 		this.on("step", function (now) {
 			this.height=this.view.requiredHeight+2*this.border;
 			this.width=this.view.requiredWidth+2*this.border;
 			this.view.bounds = {
-				x : this.border,
-				y : this.border,
+				x : this.x + this.border,
+				y : this.y + this.border,
 				w:this.width-(2*this.border),
 				h:this.height-(2*this.border)
 			};

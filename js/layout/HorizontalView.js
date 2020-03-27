@@ -8,19 +8,19 @@ class HorizontalView extends Morph {
 		this.requiredHeight=0;
 		this.color = "black";
 		this.on("step", function (now) {
-			
+
 			let sep = this.separator;
 			let current = sep;
 			let t =  sep;
 			let maxH = 0;
 			this.submorphsDo((sm) => {
-					sm.left = current;
-					sm.top = t;
-					if (sm.height > maxH) {
-						maxH = sm.height;
-					}
-					current += sm.width + sep;
-				});
+				sm.left = this.left + current;
+				sm.top = this.top + t;
+				if (sm.height > maxH) {
+					maxH = sm.height;
+				}
+				current += sm.width + sep;
+			});
 			this.requiredWidth=current;
 			if(this.adjustWidth && this.owner)
 			{
@@ -38,4 +38,3 @@ class HorizontalView extends Morph {
 	}
 
 }
- 
