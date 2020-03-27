@@ -35,28 +35,25 @@ var Form = (function () {
     });
   }
 	function generateRGBKs(img) {
-    return new Promise((resolve, reject) => {
+		var w = img.width;
+		var h = img.height;
+		var rgbks = [];
 
-  		var w = img.width;
-  		var h = img.height;
-  		var rgbks = [];
+		var canvas = document.createElement("canvas");
+		canvas.width = w;
+		canvas.height = h;
 
-  		var canvas = document.createElement("canvas");
-  		canvas.width = w;
-  		canvas.height = h;
+		var ctx = canvas.getContext("2d");
+		ctx.drawImage(img, 0, 0);
 
-  		var ctx = canvas.getContext("2d");
-  		ctx.drawImage(img, 0, 0);
+		var pixels = ctx.getImageData(0, 0, w, h).data;
 
-  		var pixels = ctx.getImageData(0, 0, w, h).data;
-
-  		// 4 is used to ask for 3 images: red, green, blue and
-  		// black in that order.
-  		for (var rgbI = 0; rgbI < 4; rgbI++) {
-        rgbks.push(generateImageForChannel(img, w, h, pixels, rgbI));
-  		}
-      Promise.all(rgbks).then(resolve);
-    });
+		// 4 is used to ask for 3 images: red, green, blue and
+		// black in that order.
+		for (var rgbI = 0; rgbI < 4; rgbI++) {
+      rgbks.push(generateImageForChannel(img, w, h, pixels, rgbI));
+		}
+    return Promise.all(rgbks);
 	}
 
 	/*
@@ -163,9 +160,7 @@ var Form = (function () {
       });
     }
 		static load(sources) {
-      return new Promise((resolve, reject) => {
-        Promise.all(sources.map(Form.loadImage)).then(resolve);
-      });
+      return Promise.all(sources.map(Form.loadImage));
 		}
 	};
 })();
