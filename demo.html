@@ -32,7 +32,7 @@
 			{ key: "3", src: "images/gb4.png" },
 			{ key: "4", src: "images/gb5.png" },
 			{ key: "5", src: "images/gb6.png" }
-		]).then(function () {
+		]).then(function (forms) {
 			// Remove loading
 			document.body.removeChild(loading);
 
@@ -124,7 +124,7 @@
 			threepwoodButton.left=optimizedFountainButton.left;
 			threepwoodButton.top=optimizedFountainButton.bottom + 10;
 			threepwoodButton.on("mouseUp", function () {
-				world.addMorph(new GuybrushThreepwood());
+				world.addMorph(new GuybrushThreepwood(forms));
 			});
 
 

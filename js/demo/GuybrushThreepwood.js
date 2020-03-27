@@ -1,14 +1,14 @@
 class GuybrushThreepwood extends Sprite {
-	constructor() {
+	constructor(forms) {
 		let key = 0;
-		super(Form.get(key.toString()));
+		super(forms[key.toString()]);
 
 			let world = World.current;
 			this.top = (Math.random() * (world.height - this.height));
 			this.right = 0;
-			
+
 			let last = 0;
-			
+
 			// Animate
 			this.on("step", function (now) {
 				// Only step every 150 ms
@@ -18,7 +18,7 @@ class GuybrushThreepwood extends Sprite {
 
 				// Next form
 				key = (key + 1) % 6;
-				this.form = Form.get(key.toString());
+				this.form = forms[key.toString()];
 
 				// Move to the right
 				this.moveDelta({
@@ -31,7 +31,7 @@ class GuybrushThreepwood extends Sprite {
 					this.remove();
 				}
 			});
-			
+
 		}
 
-	} 
+	}

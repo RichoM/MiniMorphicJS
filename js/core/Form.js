@@ -1,16 +1,5 @@
 var Form = (function () {
 	/*
-	 * Forms get cached
-	 */
-	let forms = {};
-	function setForm(key, form) {
-		forms[key] = form;
-	}
-	function getForm(key) {
-		return forms[key];
-	}
-
-	/*
 	 * Code taken from: http://www.playmycode.com/blog/2011/06/realtime-image-tinting-on-html5-canvas/
 	 */
   function generateImageForChannel(img, w, h, pixels, rgbI) {
@@ -177,11 +166,7 @@ var Form = (function () {
   				img.onload = function () {
   					count++;
   					if (count >= sources.length) {
-  						resolve(entries.map(function (assoc) {
-								let form = new Form(assoc.img);
-								setForm(assoc.key, form);
-								return form;
-							}));
+  						resolve(entries.map((assoc) => new Form(assoc.img)));
   					}
   				};
   				img.src = src;
@@ -191,9 +176,6 @@ var Form = (function () {
   				};
   			}
       });
-		}
-		static get(key) {
-			return getForm(key);
 		}
 
 	};
