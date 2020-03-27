@@ -6,8 +6,8 @@
 	<body style="margin: 0">
 		<h2 id="loading">Loading...</h2>
 		<canvas id="world" oncontextmenu="return false"></canvas>
-		 
-		
+
+
 		<script src="js/core/KeyCode.js"></script>
 		<script src="js/core/Canvas.js"></script>
 		<script src="js/core/Form.js"></script>
@@ -17,9 +17,9 @@
 		<script src="js/core/Sprite.js"></script>
 		<script src="js/core/Ellipse.js"></script>
 		<script src="js/core/Button.js"></script>
-		
+
 		<script src="js/puzzle/Puzzle.js"></script>
-		
+
 		<script>
 		var puzzles = [];
 		// First we load all the images we're going to use
@@ -28,17 +28,17 @@
 		], function (forms) {
 			// Remove loading
 			document.body.removeChild(loading);
-			
+
 			var world = new World();
 			
 			for (var i = 0; i < 15; i++) {
 				function rnd(n) { return Math.random() * n; }
 				var puzzle = new Puzzle(forms[0]);
-				puzzle.center({
-					x: rnd(world.width()),
-					y: rnd(world.height())
-				});
-				puzzle.tint(rnd(255), rnd(255), rnd(255));
+				puzzle.center = {
+					x: rnd(world.width),
+					y: rnd(world.height)
+				};
+				//puzzle.tint(rnd(255), rnd(255), rnd(255));
 				world.addMorph(puzzle);
 				puzzles.push(puzzle);
 			}

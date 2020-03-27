@@ -276,7 +276,6 @@ var Morph = (function () {
 		moveDelta(delta) {
 			this.bounds.x = this.bounds.x + delta.x;
 			this.bounds.y = this.bounds.y + delta.y;
-
 		}
 		bringToFront() {
 			if (this.owner) {

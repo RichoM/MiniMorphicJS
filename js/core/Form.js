@@ -131,7 +131,7 @@ var Form = (function () {
 			return this._img;
 		}
 		tint(r, g, b) {
-			let img = this.img();
+			let img = this.img;
 			let rgbks = generateRGBKs(img);
 			let tintImg = generateTintImage(img, rgbks, r, g, b);
 
