@@ -21,7 +21,7 @@
 		<script src="js/puzzle/Puzzle.js"></script>
 
 		<script>
-		var puzzles = [];
+		let puzzles = [];
 		// First we load all the images we're going to use
 		Form.load([
 			{ key: "puzzle", src: "images/puzzle_bevel.png" }
@@ -29,18 +29,20 @@
 			// Remove loading
 			document.body.removeChild(loading);
 
-			var world = new World();
-			
+			let world = new World();
+
 			for (var i = 0; i < 15; i++) {
 				function rnd(n) { return Math.random() * n; }
-				var puzzle = new Puzzle(forms[0]);
+				let puzzle = new Puzzle(forms[0]);
 				puzzle.center = {
 					x: rnd(world.width),
 					y: rnd(world.height)
 				};
-				//puzzle.tint(rnd(255), rnd(255), rnd(255));
-				world.addMorph(puzzle);
-				puzzles.push(puzzle);
+				puzzle.tint(rnd(255), rnd(255), rnd(255))
+					.then(() => {
+						world.addMorph(puzzle);
+						puzzles.push(puzzle);
+					});
 			}
 		});
 		</script>

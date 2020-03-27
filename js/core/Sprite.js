@@ -45,6 +45,6 @@ class Sprite extends Morph {
 		});
 	}
 	tint  (r, g, b) {
-		this.form = this.originalForm.tint(r, g, b);
+		return this.originalForm.tint(r, g, b).then(tinted => this.form = tinted);
 	}
 }
