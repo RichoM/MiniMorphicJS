@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Cards demo</title>
+	</head>
+	<body style="margin: 0; background: green">
+		<h2 id="loading">Loading...</h2>
+		<canvas id="world" oncontextmenu="return false"></canvas>
+
+
+		<script src="js/core/KeyCode.js"></script>
+		<script src="js/core/Canvas.js"></script>
+		<script src="js/core/Form.js"></script>
+		<script src="js/core/EventHandler.js"></script>
+		<script src="js/core/Morph.js"></script>
+		<script src="js/core/World.js"></script>
+		<script src="js/core/Sprite.js"></script>
+		<script src="js/core/Ellipse.js"></script>
+		<script src="js/core/Button.js"></script>
+
+		<script src="js/cards/Card.js"></script>
+
+		<script>
+
+		function rnd(n) { return Math.random() * n; }
+
+		let puzzles = [];
+		// First we load all the images we're going to use
+		Form.loadSpritesheet("images/cards.png", 208, 319).then(function (forms) {
+			// Remove loading
+			document.body.removeChild(loading);
+
+			let world = new World();
+			forms.forEach((frm,i) => {
+				let card = new Card(frm);
+				card.width /= 2;
+				card.height /= 2;
+				card.center = {
+					x: rnd(world.width),
+					y: rnd(world.height)
+				};
+				world.addMorph(card);
+			});
+		});
+		</script>
+	</body>
+</html>
