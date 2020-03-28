@@ -162,5 +162,33 @@ var Form = (function () {
 		static load(sources) {
       return Promise.all(sources.map(Form.loadImage));
 		}
+    static loadSpritesheet(src, w, h) {
+      return new Promise((resolve, reject) => {
+        let img = new Image();
+        img.onload = function () {
+          let rows = img.width / w;
+          let cols = img.height / h;
+          let pieces = [];
+          for (let j = 0; j < cols; j++) {
+            for (let i = 0; i < rows; i++) {
+        			let canvas = document.createElement("canvas");
+        			canvas.width = w;
+        			canvas.height = h;
+        			let ctx = canvas.getContext("2d");
+              ctx.drawImage(img, i*w, j*h, w, h, 0, 0, w, h);
+              let temp = new Image();
+              pieces.push(new Promise((resolve, reject) => {
+                temp.onload = function () {
+                  resolve(new Form(temp));
+                }
+          			temp.src = canvas.toDataURL();
+              }));
+            }
+          }
+          Promise.all(pieces).then(resolve);
+        };
+        img.src = src;
+      });
+    }
 	};
 })();
