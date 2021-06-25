@@ -3,7 +3,6 @@ class Canvas {
 		//TODO: use private fields when it is on the ECMA standard
 		this._html = html;
 		this._ctx = html.getContext("2d");
-
 	}
 	get ctx() {
 		return this._ctx;
@@ -12,13 +11,24 @@ class Canvas {
 		return this._html;
 	}
 
+	drawRectangle(rect, strokeStyle) {
+		this.ctx.strokeStyle = strokeStyle;
+		this.ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+	}
 	fillRectangle(rect, fillStyle) {
 		this.ctx.fillStyle = fillStyle;
 		this.ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 	}
-	fillArc(x, y, radius, startAngle, endAngle, anticlockwise, fillStyle) {
+	fillArc(x, y, radius, startAngle, endAngle, counterClockwise, fillStyle) {
 		this.ctx.beginPath();
-		this.ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+		this.ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+		this.ctx.closePath();
+		this.ctx.fillStyle = fillStyle;
+		this.ctx.fill();
+	}
+	fillEllipse(x, y, radiusX, radiusY, startAngle, endAngle, counterClockwise, fillStyle) {
+		this.ctx.beginPath();
+		this.ctx.ellipse(x, y, radiusX, radiusY, 0, startAngle, endAngle, counterClockwise);
 		this.ctx.closePath();
 		this.ctx.fillStyle = fillStyle;
 		this.ctx.fill();
@@ -54,10 +64,9 @@ class Canvas {
 		callback.apply(that);
 		this.ctx.globalAlpha = oldAlpha;
 	}
-	withOffset(offset, callback, that) { 
-		this.ctx.translate(offset.x , offset.y );
+	withOffset(offset, callback, that) {
+		this.ctx.translate(offset.x, offset.y);
 		callback.apply(that);
-		this.ctx.translate(-offset.x , -offset.y );
-
+		this.ctx.translate(-offset.x, -offset.y);
 	}
 }
