@@ -20,11 +20,11 @@ class Process extends Morph {
 				h:this.height-(2*this.border)
 			};
 			this.view.removeAllSubmorphs();
-			this.view.addMorph(new StringMorph(this.name));
-			this.view.addMorph(new StringMorph("a: "+ this.arrive));
-			this.view.addMorph(new StringMorph("c: "+ this.work));
-			this.view.addMorph(new StringMorph("w: "+ this.wait));
-			this.view.addMorph(new StringMorph("p: "+ this.priority));
+			this.view.addMorph(new Label(this.name));
+			this.view.addMorph(new Label("a: "+ this.arrive));
+			this.view.addMorph(new Label("c: "+ this.work));
+			this.view.addMorph(new Label("w: "+ this.wait));
+			this.view.addMorph(new Label("p: "+ this.priority));
 		});
 	}
 

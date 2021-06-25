@@ -7,12 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
 
 	</head>
-	<body style="margin: 0"> 
+	<body style="margin: 0">
 		<!-- Trigger the modal with a button -->
 		<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add</button>
 		<button type="button" class="btn btn-danger btn-sm"  id="rmbtn">Remove</button>
-		<button type="button" class="btn btn-success btn-lg"  id="run">Run</button>	
-	
+		<button type="button" class="btn btn-success btn-lg"  id="run">Run</button>
+
 		<!-- Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -23,9 +23,9 @@
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body"> 
+			<div class="modal-body">
 				<div class="form-group">
-					<label for="name">Name</label>	
+					<label for="name">Name</label>
 					<input type="text" name="name" id="addName" placeholder="Name" class="form-control">
 				</div>
 				<div class="form-group">
@@ -52,8 +52,8 @@
 			</div>
 		</div>
 		</div>
-	
-	
+
+
 		<table id="example" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -65,13 +65,13 @@
 				</tr>
 			</thead>
 		</table>
-		
-		
+
+
 	<br>
-	
+
 		<canvas id="world" oncontextmenu="return false"></canvas>
-		
-		
+
+
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/plug-ins/1.10.15/api/row().show().js"></script>
@@ -79,7 +79,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-		
+
 		<script src="js/core/KeyCode.js"></script>
 		<script src="js/core/Canvas.js"></script>
 		<script src="js/core/Form.js"></script>
@@ -88,14 +88,14 @@
 		<script src="js/core/World.js"></script>
 		<script src="js/core/Sprite.js"></script>
 		<script src="js/core/Ellipse.js"></script>
-		<script src="js/core/StringMorph.js"></script>
+		<script src="js/core/Label.js"></script>
 		<script src="js/core/Button.js"></script>
 		<script src="js/layout/HorizontalView.js"></script>
 		<script src="js/layout/VerticalView.js"></script>
 		<script src="js/simulation/Process.js"></script>
 		<script src="js/simulation/Processor.js"></script>
 		<script src="js/simulation/Execution.js"></script>
-		  
+
 		<script type="text/javascript" >
 				/*let processes=[];
 				processes.push( new Process("P1",10,1,1,"#FF0000"));
@@ -103,13 +103,13 @@
 				processes.push( new Process("P3",20,2,5,"#008000"));
 				processes.push( new Process("P4",3,0,0,"#FF69B4"));*/
 			let dataSet = [
-			
-			
+
+
 			["P1",10,1,1,"#FF0000"],
 			["P2",5,3,3,"#0000FF"],
             ["P3",20,2,5,"#008000"],
 			["P4",3,0,0,"#FF69B4"]
-			
+
 			];
 			let removeSelectedRow = function(){table.row('.selected').remove().draw(false);}
 			let clear = function(){
@@ -129,16 +129,16 @@
 					$("#addArrival").val(),
 					$("#addColor").val()
 					];
-				clear();	
+				clear();
 				let  addedRow = table.row.add(data).draw();
 				addedRow.show().draw(false);
-				
+
 				$(this).prev().click();
 			});
 			let table=undefined;
 			let editor=undefined;
 			$(document).ready(function() {
-				
+
 				table = $('#example').DataTable({
 					columns: [
 						{ title: 'Name' },
@@ -158,15 +158,15 @@
 		<script>
 		// First we load all the images we're going to use
 			var world = new World();
-			
+
 			function startSimulation (processes){
-				world.removeAllSubmorphs();				
+				world.removeAllSubmorphs();
 				let vv = new VerticalView();
-				vv.color="#222222"; 
+				vv.color="#222222";
 				world.addMorph(vv);
 				let processors = [];
-		
-				
+
+
 				processors.push(new Processor("FCFS","Blue",0,(state,time)=>{
 					let a = state.filter(p=>p.work>0 && p.arrive<=time);
 					a.sort((l,r)=>l.arrive-r.arrive);
@@ -176,7 +176,7 @@
 				processors.push(new Processor("RR 1 0","Green",0,
 				(state,time)=>{
 					let bi=state.indexOf(lastRR) + 1;
-					
+
 					for(let i=0;i<state.length;i++){
 						let c= state[(i+bi)%state.length];
 						if(c.work>0 && c.arrive<=time){
@@ -192,7 +192,7 @@
 				(state,time)=>{
 					let bi=state.indexOf(lastRR31) + 1;
 					if(lastRR31&&lastRR31.work>0 && RR31execs>0){
-						RR31execs--;				
+						RR31execs--;
 						return lastRR31;
 					}
 					for(let i=0;i<state.length;i++){
@@ -205,21 +205,21 @@
 					}
 					return undefined;
 				}));
-				
-			   
-				 
-				
+
+
+
+
 				let sim = new HorizontalView();
 				let procNames = new VerticalView();
 				let execs= new VerticalView();
 				let executions=[];
-				
+
 				sim.addMorph(procNames);
 				sim.addMorph(execs);
 				vv.addMorph(sim);
 				processors.forEach(e=>{
 					let ex = new Execution(e,processes);
-					let name= new StringMorph(e.name);
+					let name= new Label(e.name);
 					name.on("step",()=>{name.height=ex.height;});
 					procNames.addMorph(name);
 					executions.push(ex);
@@ -236,7 +236,7 @@
 					let r = data[i];
 					proc.push(new Process(r[0],parseInt(r[1]),parseInt(r[2]),parseInt(r[3]),r[4]));
 				}
-			
+
 				currentExecutions = startSimulation(proc);
 				let t = function(){
 					if(currentExecutions.some(e=>!e.finished)){
@@ -248,10 +248,10 @@
 					}
 				}
 				setTimeout(t,1000);
-			}	
+			}
 			$("#run").on("click", simulate);
-		
-			
+
+
 		</script>
 	</body>
 </html>

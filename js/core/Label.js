@@ -1,4 +1,4 @@
-class StringMorph extends Morph {
+class Label extends Morph {
 	constructor(text) {
 		super();
 		this._font = "18px Arial";
