@@ -40,8 +40,12 @@ var World = (function () {
 		x : 0,
 		y : 0
 	};
+	let wireframe = false;
 
 	return class World extends Morph {
+		static get wireframe() { return wireframe; }
+		static set wireframe(v) {	wireframe = true;	}
+
 		constructor(htmlCanvas) {
 			super();
 

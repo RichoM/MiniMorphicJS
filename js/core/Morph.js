@@ -364,6 +364,10 @@ var Morph = (function () {
 					submorph.fullDrawOn(canvas);
 				});
 			}, this);
+			
+			if (World.wireframe) {
+				canvas.drawRectangle(this.bounds, "red");
+			}
 		}
 
 		on(evtType, callback, that) {
