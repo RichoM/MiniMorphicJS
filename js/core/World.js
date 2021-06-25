@@ -36,13 +36,13 @@ var World = (function () {
 		());
 
 	let instances = [];
-	let cursor = {
-		x : 0,
-		y : 0
-	};
+	let cursor = {x : 0, y : 0};
 	let wireframe = false;
 
 	return class World extends Morph {
+		static get instances() { return instances; }
+		static get current() { return instances[instances.length - 1]; }
+		static get cursor() { return cursor; }
 		static get wireframe() { return wireframe; }
 		static set wireframe(v) {	wireframe = true;	}
 
@@ -159,16 +159,5 @@ var World = (function () {
 			window.requestAnimationFrame(step);
 		}
 
-		//static methods
-
-		static get instances() {
-			return instances;
-		}
-		static get current() {
-			return instances[instances.length - 1];
-		}
-		static get cursor() {
-			return cursor;
-		}
 	};
 })();
