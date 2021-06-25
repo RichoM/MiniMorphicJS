@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Ricardo Moran">
+  </head>
+  <body>
+    <h2 id="loading">Loading...</h2>
+    <div style="magin: 5px 10px; padding: 5px 10px;">
+      <canvas id="world" oncontextmenu="return false"></canvas>
+    </div>
+		<script src="js/core/KeyCode.js"></script>
+		<script src="js/core/Canvas.js"></script>
+		<script src="js/core/Form.js"></script>
+		<script src="js/core/EventHandler.js"></script>
+		<script src="js/core/Morph.js"></script>
+		<script src="js/core/World.js"></script>
+		<script src="js/core/Sprite.js"></script>
+		<script src="js/core/Ellipse.js"></script>
+		<script src="js/core/Button.js"></script>
+    <script src="js/core/Label.js"></script>
+
+    <script type="text/javascript">
+      window.onload = function () {
+  			document.body.removeChild(loading);
+
+        World.wireframe = true; // DEBUGGING
+        let world = new World();
+
+        let ellipse1 = new Ellipse();
+        ellipse1.width /= 2;
+        ellipse1.height /= 2;
+
+        let ellipse2 = new Ellipse();
+        ellipse2.width /= 2;
+        ellipse2.height /= 2;
+        ellipse2.color = "red";
+
+        world.addMorph(ellipse1);
+        world.addMorph(ellipse2);
+
+        ellipse1.center = {x: 100, y: 100};
+        ellipse2.center = ellipse1.center;
+        ellipse2.top = ellipse1.bottom + 50;
+
+        ellipse1.on("step", (_, delta) => {
+          ellipse1.x += 600 * delta;
+        });
+        ellipse2.on("step", () => {
+          ellipse2.x += 10;
+        })
+
+        let button = new Button();
+        button.on("mouseUp", (evt) => console.log(evt));
+        world.addMorph(button);
+
+        let mouseTest = new Ellipse();
+        mouseTest.on("mouseEnter", evt => {
+          mouseTest.color = "green";
+          label2.text = "ENTER!";
+          label2.center = mouseTest.center;
+          label2.top = mouseTest.center.y;
+        });
+        mouseTest.on("mouseLeave", evt => {
+          mouseTest.color = "blue";
+          label2.text = "LEAVE!";
+          label2.center = mouseTest.center;
+          label2.top = mouseTest.center.y;
+        });
+        mouseTest.on("mouseMove", evt => {
+          label1.text = JSON.stringify(World.cursor);
+          label1.center = mouseTest.center;
+          label1.bottom = mouseTest.center.y;
+        });
+        mouseTest.on("mouseDown", evt => {
+          label2.text = "DOWN!";
+          label2.center = mouseTest.center;
+          label2.top = mouseTest.center.y;
+        });
+        mouseTest.on("mouseUp", evt => {
+          label2.text = "UP!";
+          label2.center = mouseTest.center;
+          label2.top = mouseTest.center.y;
+        });
+        mouseTest.width = 600;
+        mouseTest.height = 300;
+        mouseTest.center = world.center;
+        let label1 = new Label();
+        label1.font = "72px Arial";
+        label1.color = "white";
+        label1.center = mouseTest.center;
+        label1.bottom = mouseTest.center.y;
+        mouseTest.addMorph(label1);
+        let label2 = new Label();
+        label2.font = "bold 64px serif";
+        label2.color = "skyblue";
+        label2.center = mouseTest.center;
+        label2.top = mouseTest.center.y;
+        mouseTest.addMorph(label2);
+        world.addMorph(mouseTest);
+
+
+        let cursorLabel = new Label();
+        cursorLabel.on("step", () => {
+          cursorLabel.text = JSON.stringify(World.cursor);
+          cursorLabel.bottomCenter = World.cursor;
+        });
+        world.addMorph(cursorLabel);
+      }
+    </script>
+  </body>
+</html>
