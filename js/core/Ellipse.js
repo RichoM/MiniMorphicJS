@@ -1,7 +1,4 @@
 class Ellipse extends Morph {
-	constructor() {
-		super();
-	}
 	drawOn(canvas) {
 		var c = this.center;
 		var w = this.width;

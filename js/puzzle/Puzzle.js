@@ -1,6 +1,5 @@
 let Puzzle = (function () {
 
-
 	let picked = null;
 	let instances = [];
 
@@ -17,7 +16,6 @@ let Puzzle = (function () {
 	}
 
 	return class Puzzle extends Sprite {
-
 
 		constructor(form) {
 			super(form);

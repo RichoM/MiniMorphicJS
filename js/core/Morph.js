@@ -39,7 +39,6 @@ var Morph = (function () {
 		}
 		set owner(val) {
 			this._owner = val;
-			return this._owner;
 		}
 
 		get bounds() {
@@ -48,7 +47,6 @@ var Morph = (function () {
 		set bounds(val) {
 			this._bounds = val;
 			this.changed();
-			return this._bounds;
 		}
 
 		get position() {
@@ -63,7 +61,6 @@ var Morph = (function () {
 				y : val.y - this.bounds.y
 			});
 			this.changed();
-			return this.position;
 		}
 
 		get extent() {
@@ -73,11 +70,9 @@ var Morph = (function () {
 			};
 		}
 		set extent(val) {
-
 			this.bounds.w = val.w;
 			this.bounds.h = val.h;
 			this.changed();
-			return this.extent;
 		}
 		get width() {
 			return this.extent.w;
@@ -87,7 +82,6 @@ var Morph = (function () {
 				w : val,
 				h : this.extent.h
 			};
-			return this.width;
 		}
 		get height() {
 			return this.extent.h;
@@ -97,7 +91,6 @@ var Morph = (function () {
 				w : this.extent.w,
 				h : val
 			};
-			return this.height;
 		}
 		get submorphs() {
 			return this._submorphs;
@@ -114,7 +107,6 @@ var Morph = (function () {
 		set alpha(val) {
 			this._alpha = val;
 			this.changed();
-			return this._alpha;
 		}
 		/*
 		 * We also need the absolute alpha in order to draw.
@@ -128,20 +120,19 @@ var Morph = (function () {
 		set color(val) {
 			this._color = val;
 			this.changed();
-			return this._color;
 		}
 
 		get x() {
 			return this.left;
 		}
 		set x(val) {
-			return this.left = val;
+			this.left = val;
 		}
 		get y() {
 			return this.top;
 		}
 		set y(val) {
-			return this.top = val;
+			this.top = val;
 		}
 
 		get left() {
@@ -152,7 +143,6 @@ var Morph = (function () {
 				x : val,
 				y : this.position.y
 			};
-			return this.left;
 		}
 		get right() {
 			return this.position.x + this.width;
@@ -162,7 +152,6 @@ var Morph = (function () {
 				x : val - this.width,
 				y : this.position.y
 			};
-			return this.right;
 		}
 
 		get top() {
@@ -173,7 +162,6 @@ var Morph = (function () {
 				x : this.position.x,
 				y : val
 			};
-			return this.top;
 		}
 
 		get bottom() {
@@ -184,7 +172,6 @@ var Morph = (function () {
 				x : this.position.x,
 				y : val - this.height
 			};
-			return this.bottom;
 		}
 
 		get topCenter() {
@@ -199,7 +186,6 @@ var Morph = (function () {
 				x : val.x - (this.width / 2),
 				y : val.y
 			};
-			return this.topCenter;
 		}
 
 		get bottomCenter() {
@@ -215,7 +201,6 @@ var Morph = (function () {
 				x : val.x - (bounds.w / 2),
 				y : val.y - bounds.h
 			};
-			return this.bottomCenter;
 		}
 
 		get center() {
@@ -231,7 +216,6 @@ var Morph = (function () {
 				x : val.x - (bounds.w / 2),
 				y : val.y - (bounds.h / 2)
 			};
-			return this.center;
 		}
 
 		get wantsToHandleMouseMove() {
@@ -364,7 +348,7 @@ var Morph = (function () {
 					submorph.fullDrawOn(canvas);
 				});
 			}, this);
-			
+
 			if (World.wireframe) {
 				canvas.drawRectangle(this.bounds, "red");
 			}

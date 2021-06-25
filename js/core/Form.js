@@ -4,7 +4,6 @@ var Form = (function () {
 	 */
   function generateImageForChannel(img, w, h, pixels, rgbI) {
     return new Promise((resolve, reject) => {
-
       var canvas = document.createElement("canvas");
       canvas.width = w;
       canvas.height = h;
@@ -14,10 +13,7 @@ var Form = (function () {
       var to = ctx.getImageData(0, 0, w, h);
       var toData = to.data;
 
-      for (
-        var i = 0, len = pixels.length;
-        i < len;
-        i += 4) {
+      for (var i = 0, len = pixels.length; i < len; i += 4) {
         toData[i] = (rgbI === 0) ? pixels[i] : 0;
         toData[i + 1] = (rgbI === 1) ? pixels[i + 1] : 0;
         toData[i + 2] = (rgbI === 2) ? pixels[i + 2] : 0;
@@ -28,12 +24,11 @@ var Form = (function () {
 
       // image is _slightly_ faster then canvas for this, so convert
       var imgComp = new Image();
-      imgComp.onload = function () {
-        resolve(imgComp);
-      };
+      imgComp.onload = function () { resolve(imgComp); };
       imgComp.src = canvas.toDataURL();
     });
   }
+
 	function generateRGBKs(img) {
 		var w = img.width;
 		var h = img.height;

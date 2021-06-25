@@ -6,7 +6,7 @@ class Sprite extends Morph {
 		this._form = form;
 		this.resize();
 	}
-	
+
 	get originalForm() {
 		return this._originalForm;
 	}
@@ -18,7 +18,6 @@ class Sprite extends Morph {
 			this._form = val;
 			this.resize();
 		}
-		return this.form;
 	}
 
 	containsPoint(point) {

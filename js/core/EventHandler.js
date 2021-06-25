@@ -6,28 +6,26 @@ class EventHandler {
 		this._handlesKeyboard = false;
 		this._handlesStepping = false;
 	}
+
 	get wantsToHandleMouseMove() {
 		return this._handlesMouseMove;
 	}
 	set wantsToHandleMouseMove(val) {
 		this._handlesMouseMove = val;
-		return this._handlesMouseMove;
 	}
 	get wantsToHandleKeyboard() {
 		return this._handlesKeyboard;
 	}
 	set wantsToHandleKeyboard(val) {
 		this._handlesKeyboard = val;
-		return this._handlesKeyboard;
 	}
 	get wantsToHandleStepping() {
 		return this._handlesStepping;
 	}
-
 	set wantsToHandleStepping(val) {
 		this._handlesStepping = val;
-		return this._handlesStepping;
 	}
+
 	listenersFor(evtType) {
 		return this._eventListeners[evtType] || [];
 	}
@@ -90,5 +88,4 @@ class EventHandler {
 	handleStep(now, delta) {
 		return this.handleEvent("step", [now, delta]);
 	}
-
 }

@@ -1,11 +1,8 @@
 let Card = (function () {
 
-
 	let picked = null;
 
 	return class Card extends Sprite {
-
-
 		constructor(form) {
 			super(form);
 
