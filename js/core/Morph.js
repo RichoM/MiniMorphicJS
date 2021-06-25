@@ -240,6 +240,9 @@ var Morph = (function () {
 		get wantsToHandleKeyboard() {
 			return this.eventHandler.wantsToHandleKeyboard;
 		}
+		get wantsToHandleStepping() {
+			return this.eventHandler.wantsToHandleStepping;
+		}
 
 		//Methods
 		addMorph(morph) {
@@ -457,9 +460,6 @@ var Morph = (function () {
 			return this.eventHandler.handleStep(now, delta);
 		}
 
-		wantsToHandleStepping() {
-			return this.eventHandler.wantsToHandleStepping();
-		}
 		fullStep(now, delta) {
 			if (this.wantsToHandleStepping) {
 				this.handleStep(now, delta);
