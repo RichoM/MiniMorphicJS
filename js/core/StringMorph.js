@@ -1,31 +1,38 @@
 class StringMorph extends Morph {
 	constructor(text) {
 		super();
+		this._font = "18px Arial";
 		this.text = text;
 		this.color = "#AAAAAA";
 	}
+
 	get text() {
 		return this._text;
 	}
 	set text(v) {
 		this._text = v;
-		let canvas = document.createElement("canvas"); 
-		let ctx = canvas.getContext("2d");
-		ctx.font = "18px Arial";
+		this.resize();
+	}
+
+	get font() {
+		return this._font;
+	}
+	set font(v) {
+		this._font = v;
+		this.resize();
+	}
+
+	resize() {
+		let ctx = World.current.canvas.ctx;
+		ctx.font = this.font;
 		ctx.textAlign = "left";
 		ctx.textBaseline = "top";
 		let metrics = ctx.measureText(this.text);
-		this.width=metrics.width;
+		this.width = metrics.width;
+		this.height = metrics.actualBoundingBoxDescent;
 		this.changed();
-		return this._text;
 	}
 	drawOn(canvas) {
-		canvas.drawText(
-			this.position,
-			this.text,
-			this.color,
-			"18px Arial",
-			"left",
-			"top");
+		canvas.drawText(this.position, this.text,	this.color,	this.font, "left", "top");
 	}
 }
