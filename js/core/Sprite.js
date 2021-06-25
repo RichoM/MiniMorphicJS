@@ -6,7 +6,7 @@ class Sprite extends Morph {
 		this._form = form;
 		this.resize();
 	}
-	//Properties
+	
 	get originalForm() {
 		return this._originalForm;
 	}
@@ -20,7 +20,7 @@ class Sprite extends Morph {
 		}
 		return this.form;
 	}
-	//Methods
+
 	containsPoint(point) {
 		return super.containsPoint(point) && this.alphaAt(point) > 0;
 	}
@@ -37,14 +37,14 @@ class Sprite extends Morph {
 			this.extent = form.extent;
 		}
 	}
-	alphaAt (point) {
+	alphaAt(point) {
 		let pos = this.position;
 		return this.form.alphaAt({
 			x : point.x - pos.x,
 			y : point.y - pos.y
 		});
 	}
-	tint  (r, g, b) {
+	tint(r, g, b) {
 		return this.originalForm.tint(r, g, b).then(tinted => this.form = tinted);
 	}
 }
