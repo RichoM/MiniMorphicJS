@@ -44,7 +44,7 @@ var World = (function () {
 		static get current() { return instances[instances.length - 1]; }
 		static get cursor() { return cursor; }
 		static get wireframe() { return wireframe; }
-		static set wireframe(v) {	wireframe = true;	}
+		static set wireframe(v) { wireframe = true;	}
 
 		constructor(htmlCanvas) {
 			super();
@@ -61,7 +61,6 @@ var World = (function () {
 			this.initializeStepping();
 
 			instances.push(this);
-
 		}
 		get html() {
 			return this._html;
@@ -99,10 +98,8 @@ var World = (function () {
 			};
 		}
 
-		//methods.
-
 		changed() {
-			this.invalidRect=this.bounds;
+			this.invalidRect = this.bounds;
 		}
 		draw() {
 			this.fullDrawOn(this.canvas);
@@ -138,8 +135,8 @@ var World = (function () {
 			html.addEventListener("mousemove", function (evt) {
 				that.fullHandleMouseMove(evt, lastCursorPosition);
 				cursor = lastCursorPosition = {
-					x : evt.x,
-					y : evt.y
+					x : evt.offsetX,
+					y : evt.offsetY
 				};
 			});
 		}

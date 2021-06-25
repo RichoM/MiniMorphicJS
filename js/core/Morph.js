@@ -342,9 +342,9 @@ var Morph = (function () {
 		containsPoint(point) {
 			var bounds = this.bounds;
 			return bounds.x <= point.x
-			 && bounds.y <= point.y
-			 && point.x < (bounds.x + bounds.w)
-			 && point.y < (bounds.y + bounds.h);
+				 && bounds.y <= point.y
+				 && point.x < (bounds.x + bounds.w)
+				 && point.y < (bounds.y + bounds.h);
 		}
 		changed() {
 			var owner = this.owner;
@@ -409,8 +409,8 @@ var Morph = (function () {
 		fullHandleMouseClick(evt, isMouseDown) {
 			let handled = false;
 			if (this.containsPoint({
-					x : evt.x,
-					y : evt.y
+					x : evt.offsetX,
+					y : evt.offsetY
 				})) {
 				handled = isMouseDown ?
 					this.handleMouseDown(evt) :
@@ -428,8 +428,8 @@ var Morph = (function () {
 			// Quick check to avoid unnecessary processing
 			if (this.wantsToHandleMouseMove) {
 				let pos = {
-					x : evt.x,
-					y : evt.y
+					x : evt.offsetX,
+					y : evt.offsetY
 				};
 				let isInside = this.containsPoint(pos);
 				let wasInside = this.containsPoint(lastCursorPosition);
