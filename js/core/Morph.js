@@ -131,6 +131,19 @@ var Morph = (function () {
 			return this._color;
 		}
 
+		get x() {
+			return this.left;
+		}
+		set x(val) {
+			return this.left = val;
+		}
+		get y() {
+			return this.top;
+		}
+		set y(val) {
+			return this.top = val;
+		}
+
 		get left() {
 			return this.position.x;
 		}
