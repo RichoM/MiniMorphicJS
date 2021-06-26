@@ -34,7 +34,7 @@ var Morph = (function () {
 			this._alpha = 1;
 			this._color = "#0000FF";
 		}
-		//Properties
+
 		get owner() {
 			return this._owner;
 		}
@@ -48,6 +48,11 @@ var Morph = (function () {
 		set rotation(radians) {
 			this._rotation = radians;
 			this.changed();
+		}
+
+		get absoluteRotation() {
+			// TODO(Richo): This calculation is WRONG! It doesn't take into consideration that the submorph might not be exactly centered
+			return this.rotation + (this.owner ? this.owner.absoluteRotation : 0);
 		}
 
 		get bounds() {
@@ -333,11 +338,18 @@ var Morph = (function () {
 		}
 
 		containsPoint(point) {
-			var bounds = this.bounds;
-			return bounds.x <= point.x
-				 && bounds.y <= point.y
-				 && point.x < (bounds.x + bounds.w)
-				 && point.y < (bounds.y + bounds.h);
+			let absoluteRotation = this.absoluteRotation;
+			var x = point.x - this.center.x;
+			var y = point.y - this.center.y;
+			var r = Math.sqrt(x*x+y*y);
+			var ang = Math.atan2(y, x);
+			var x_ = r*Math.cos(ang-absoluteRotation) + this.center.x;
+			var y_ = r*Math.sin(ang-absoluteRotation) + this.center.y;
+			var bounds = this.bounds; // TODO(Richo): Bounds without rotation, original bounds?
+			return bounds.x <= x_
+				 && bounds.y <= y_
+				 && x_ < (bounds.x + bounds.w)
+				 && y_ < (bounds.y + bounds.h);
 		}
 		changed() {
 			var owner = this.owner;
