@@ -59,6 +59,7 @@
         world.addMorph(button);
 
         let mouseTest = new Ellipse();
+        mouseTest.on("step", (_, delta) => mouseTest.rotation += delta);
         mouseTest.on("mouseEnter", evt => {
           mouseTest.color = "green";
           label2.text = "ENTER!";
