@@ -33,6 +33,6 @@ class Label extends Morph {
 		this.changed();
 	}
 	drawOn(canvas) {
-		canvas.drawText(this.position, this.text,	this.color,	this.font, "left", "top");
+		canvas.drawText({x: 0, y: 0}, this.text, this.color, this.font, "left", "top");
 	}
 }

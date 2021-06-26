@@ -90,12 +90,24 @@
         mouseTest.height = 300;
         mouseTest.center = world.center;
         let label1 = new Label();
+        label1.on("mouseEnter", () => {
+          label1.color = "orange";
+          label1.alpha = 0.75;
+          mouseTest.alpha = 0.75;
+        });
+        label1.on("mouseLeave", () => {
+          label1.color = "white";
+          label1.alpha = 1;
+          mouseTest.alpha = 1;
+        });
         label1.font = "72px Arial";
         label1.color = "white";
         label1.center = mouseTest.center;
         label1.bottom = mouseTest.center.y;
         mouseTest.addMorph(label1);
         let label2 = new Label();
+        label2.on("mouseEnter", () => label2.color = "orange");
+        label2.on("mouseLeave", () => label2.color = "skyblue");
         label2.font = "bold 64px serif";
         label2.color = "skyblue";
         label2.center = mouseTest.center;

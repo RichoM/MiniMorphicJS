@@ -64,9 +64,14 @@ class Canvas {
 		callback.apply(that);
 		this.ctx.globalAlpha = oldAlpha;
 	}
-	withOffset(offset, callback, that) {
+	withTranslation(offset, callback, that) {
 		this.ctx.translate(offset.x, offset.y);
 		callback.apply(that);
 		this.ctx.translate(-offset.x, -offset.y);
+	}
+	withRotation(radians, callback, that) {
+		this.ctx.rotate(radians);
+		callback.apply(that);
+		this.ctx.rotate(-radians);
 	}
 }

@@ -28,6 +28,7 @@ var Morph = (function () {
 				w : 40,
 				h : 30
 			};
+			this._rotation = 0;
 			this._submorphs = [];
 			this._eventHandler = new EventHandler();
 			this._alpha = 1;
@@ -39,6 +40,14 @@ var Morph = (function () {
 		}
 		set owner(val) {
 			this._owner = val;
+		}
+
+		get rotation() {
+			return this._rotation;
+		}
+		set rotation(radians) {
+			this._rotation = radians;
+			this.changed();
 		}
 
 		get bounds() {
@@ -338,20 +347,36 @@ var Morph = (function () {
 		}
 
 		drawOn(canvas) {
-			canvas.fillRectangle(this.bounds, this.color);
+			canvas.fillRectangle({x: 0, y: 0, w: this.width, h: this.height}, this.color);
 		}
 
 		fullDrawOn(canvas) {
-			canvas.withAlpha(this.absoluteAlpha, function () {
-				this.drawOn(canvas);
-				this.submorphsDo(function (submorph) {
-					submorph.fullDrawOn(canvas);
-				});
+			let translation = {x: 0, y: 0};
+			if (this.owner) {
+				translation.x = this.position.x - this.owner.position.x;
+				translation.y = this.position.y - this.owner.position.y;
+			}
+			let offset = {x: this.width/-2, y: this.height/-2};
+			translation.x -= offset.x;
+			translation.y -= offset.y;
+			canvas.withTranslation(translation, function () {
+				canvas.withRotation(this.rotation, function () {
+					canvas.withTranslation(offset, function () {
+
+						canvas.withAlpha(this.absoluteAlpha, function () {
+							this.drawOn(canvas);
+							this.submorphsDo(function (submorph) {
+								submorph.fullDrawOn(canvas);
+							});
+						}, this);
+
+						if (World.wireframe) {
+							canvas.drawRectangle({x: 0, y: 0, w: this.width, h: this.height}, "red");
+						}
+					}, this);
+				}, this);
 			}, this);
 
-			if (World.wireframe) {
-				canvas.drawRectangle(this.bounds, "red");
-			}
 		}
 
 		on(evtType, callback, that) {

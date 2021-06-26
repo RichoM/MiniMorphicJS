@@ -27,7 +27,7 @@ class Sprite extends Morph {
 	drawOn(canvas) {
 		let form = this.form;
 		if (form !== undefined) {
-			canvas.drawImage(this.bounds, form);
+			canvas.drawImage({x: 0, y: 0, w: this.width, h: this.height}, form);
 		}
 	}
 	resize() {

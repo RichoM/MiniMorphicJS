@@ -35,7 +35,8 @@ class Process extends Morph {
 		this._name = val;
 		this.changed();
 		return this.name;
-	}get arrive() {
+	}
+	get arrive() {
 		return this._arrive;
 	}
 	set arrive(val) {
@@ -83,6 +84,7 @@ class Process extends Morph {
 		return new Process(this.name,this.work,this.priority,this.arrive,this.color);
 	}
 	drawOn(canvas) {
-		canvas.fillRectangle(this.bounds, this.color);
+		// TODO(Richo): Isn't this exactly the default implementation??
+		canvas.fillRectangle({x: 0, y: 0, w: this.width, h: this.height}, this.color);
 	}
 }

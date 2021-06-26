@@ -1,7 +1,7 @@
 
 
 class Execution	 extends Morph{
-	
+
 	constructor(processor,processes){
 		super();
 		this.processor=processor;
@@ -19,20 +19,18 @@ class Execution	 extends Morph{
 			this.height=this.view.height;
 			this.width=this.view.width;
 		});
-		
+
 		this.stepWidth=10;
 		this.stepHeight=10;
-		
+
 		this.state="idle";
 		this.switchCost=processor.switchCost;
 		this.currentProc=undefined;
 		this.idleTime=0;
 		this.switchTime=0;
 		this.time=0;
-		this.nextProc=undefined;
-		
+		this.nextProc=undefined;		
 	}
-	drawOn(canvas){}
 	createHistoryStep(color){
 		let m = new Morph();
 		m.color=color;
@@ -59,14 +57,14 @@ class Execution	 extends Morph{
 			}
 		}
 		selected=selected|| this.processor.selectProcess(this.processes,this.time);
-		
+
 		if(this.state=="idle"){
-			if(selected){	
+			if(selected){
 				this.state="processing";
 				this.currentProc=selected;
-			}else{ 
+			}else{
 					this.createHistoryStep("#FFFFFF");
-					this.idleTime++; 
+					this.idleTime++;
 			}
 		}
 		let workDone=null;
@@ -77,13 +75,13 @@ class Execution	 extends Morph{
 				this.createHistoryStep(selected.color);
 				if(this.currentProc.work==0){this.state="idle";}
 			}else{
-				//ctxt switch. 
+				//ctxt switch.
 				this.state="switch";
 				this.createHistoryStep("#FFFF00");
 				this.switchCost=this.processor.switchCost-1;
 				this.switchTime++;
 				this.nextProc=selected;
-				 
+
 			}
 		}
 		this.processes.forEach((e)=>{if(e!=workDone && e.work>0){e.wait++;}});

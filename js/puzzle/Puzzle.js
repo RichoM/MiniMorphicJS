@@ -78,14 +78,14 @@ let Puzzle = (function () {
 			if (this.highlight) {
 				let bounds = this.bounds;
 				canvas.fillRectangle({
-					x: bounds.x + bounds.w - 50,
-					y: bounds.y,
+					x: bounds.w - 50,
+					y: 0,
 					w: 50,
 					h: bounds.h
 				}, "#00FF00")
 			}
 			super.drawOn(canvas);
-			canvas.drawText(this.center,
+			canvas.drawText({x: this.width/2, y: this.height/2},
 											Math.round(this.left),
 											"black",
 											"24px Arial",

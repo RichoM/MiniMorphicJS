@@ -61,9 +61,9 @@ class Button extends Morph {
 		});
 	}
 	drawOn(canvas) {
-		canvas.fillRectangle(this.bounds, this.color);
+		canvas.fillRectangle({x: 0, y: 0, w: this.width, h: this.height}, this.color);
 		canvas.drawText(
-			this.center,
+			{x: this.width/2, y: this.height/2},
 			this.label,
 			this.textColor,
 			"24px Arial",

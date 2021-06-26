@@ -105,7 +105,7 @@ var World = (function () {
 			this.fullDrawOn(this.canvas);
 		}
 		drawOn(canvas) {
-			canvas.clearRectangle(this.bounds);
+			canvas.clearRectangle({x: 0, y: 0, w: this.width, h: this.height});
 		}
 		initializeEventHandling() {
 			let that = this; // FUCKING Javascript!
