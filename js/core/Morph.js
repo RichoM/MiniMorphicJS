@@ -51,8 +51,11 @@ var Morph = (function () {
 		}
 
 		get absoluteRotation() {
-			// TODO(Richo): This calculation is WRONG! It doesn't take into consideration that the submorph might not be exactly centered
-			return this.rotation + (this.owner ? this.owner.absoluteRotation : 0);
+			let offsetRotation = 0;
+			if (this.owner) {
+				offsetRotation += this.owner.absoluteRotation;
+			}
+			return this.rotation + offsetRotation;
 		}
 
 		get bounds() {
@@ -338,6 +341,10 @@ var Morph = (function () {
 		}
 
 		containsPoint(point) {
+			/*
+			TODO(Richo): This calculation gives incorrect results when myself and my owner are rotated.
+			I think the problem is that my center is not taking into account the offset to my owner.
+			*/
 			let absoluteRotation = this.absoluteRotation;
 			var x = point.x - this.center.x;
 			var y = point.y - this.center.y;
